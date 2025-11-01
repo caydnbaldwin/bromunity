@@ -5,179 +5,139 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bromunity – Find Your Player Two</title>
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at top, #0a0a0f, #040406);
-      color: #fff;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 3rem;
-      background: rgba(20, 20, 25, 0.8);
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 10;
-      backdrop-filter: blur(8px);
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+      background: #fafafa;
+      color: #1a1a1a;
+      line-height: 1.6;
+      padding: 3rem 1.5rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 420px;
+      margin: 0 auto;
     }
 
     .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #00c2ff;
-      letter-spacing: 1px;
-    }
-
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin: 0 1rem;
-      transition: 0.3s;
-    }
-
-    nav a:hover {
-      color: #00c2ff;
+      font-size: 1.75rem;
+      font-weight: 300;
+      color: #2d5a3d;
+      text-align: center;
+      margin-bottom: 4rem;
+      letter-spacing: 2px;
     }
 
     .hero {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       text-align: center;
-      height: 100vh;
-      background: url('https://images.unsplash.com/photo-1605902711622-cfb43c44367f') no-repeat center center/cover;
-      position: relative;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 700px;
-      padding: 2rem;
+      margin-bottom: 4rem;
     }
 
     .hero h1 {
-      font-size: 3rem;
-      color: #00c2ff;
-      margin-bottom: 1rem;
+      font-size: 2.25rem;
+      font-weight: 200;
+      color: #1a1a1a;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
     }
 
     .hero p {
-      font-size: 1.2rem;
-      color: #ccc;
-      margin-bottom: 2rem;
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 3rem;
+      font-weight: 300;
     }
 
     .btn {
-      background: #00c2ff;
-      color: #000;
-      padding: 0.9rem 2rem;
+      background: #2d5a3d;
+      color: white;
       border: none;
-      border-radius: 30px;
-      font-size: 1.1rem;
+      padding: 1rem 2rem;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: 400;
       cursor: pointer;
-      transition: 0.3s;
+      transition: all 0.2s ease;
+      letter-spacing: 0.5px;
     }
 
     .btn:hover {
-      background: #009edb;
-    }
-
-    section {
-      padding: 5rem 2rem;
-      max-width: 1100px;
-      margin: auto;
-      text-align: center;
+      background: #234a30;
+      transform: translateY(-1px);
     }
 
     .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
     }
 
     .feature {
-      background: #111;
-      border-radius: 15px;
+      background: #ffffff;
       padding: 2rem;
-      box-shadow: 0 0 15px rgba(0, 194, 255, 0.1);
+      border-radius: 24px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
 
     .feature h3 {
-      color: #00c2ff;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #2d5a3d;
+      margin-bottom: 0.75rem;
     }
 
-    footer {
-      text-align: center;
-      padding: 2rem;
-      background: #0a0a0f;
+    .feature p {
+      font-size: 0.95rem;
       color: #666;
+      font-weight: 300;
     }
 
-    .footer-links a {
-      color: #00c2ff;
-      text-decoration: none;
-      margin: 0 0.5rem;
-    }
-
-    .footer-links a:hover {
-      text-decoration: underline;
+    .footer {
+      text-align: center;
+      color: #999;
+      font-size: 0.85rem;
+      font-weight: 300;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">Bromunity</div>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#">Join</a>
-    </nav>
-  </header>
-
-  <section class="hero">
-    <div class="hero-content">
+  <div class="container">
+    <div class="logo">BROMUNITY</div>
+    
+    <div class="hero">
       <h1>Find Your Player Two</h1>
-      <p>Join Bromunity — the ultimate hangout for straight male gamers looking to squad up, chill, and form real platonic connections.</p>
-      <button class="btn">Join the Bromunity</button>
+      <p>Connect with like-minded gamers for genuine friendships and epic gaming sessions.</p>
+      <button class="btn">Join the Community</button>
     </div>
-  </section>
 
   <section>
-    <h2>Why Join Bromunity?</h2>
     <div class="features">
       <div class="feature">
-        <h3>🎮 Game Together</h3>
-        <p>Link up with bros who play your favorite games and always have a teammate you can count on.</p>
+        <h3>Game Together</h3>
+        <p>Find teammates who share your passion and gaming style.</p>
       </div>
       <div class="feature">
-        <h3>💬 Chill Vibes Only</h3>
-        <p>No drama, no weirdness — just good conversations and gaming sessions with like-minded guys.</p>
+        <h3>Genuine Connections</h3>
+        <p>Build real friendships beyond the screen.</p>
       </div>
       <div class="feature">
-        <h3>🤝 Real Friendships</h3>
-        <p>Whether it’s a quick 2v2 or long-term gaming buddy, build lasting connections through shared fun.</p>
+        <h3>Positive Vibes</h3>
+        <p>A welcoming space focused on good times and respect.</p>
       </div>
     </div>
   </section>
 
-  <footer>
-    <p>&copy; 2025 Bromunity. All rights reserved.</p>
-    <div class="footer-links">
-      <a href="#">Privacy</a> | <a href="#">Terms</a> | <a href="#">Contact</a>
+    <div class="footer">
+      <p>© 2025 Bromunity</p>
     </div>
-  </footer>
+  </div>
 </body>
 </html>
