@@ -1,0 +1,5 @@
+PrimaryKeys,,,,,,,,,Persons,,,,,,,,,,,,,,,Games,,,,,Profiles,,,,,,PlayerRoles,,,,,,Bios,,,,Friendships,,,,
+EmailAddress,Producer,GameTitle,PlayerRole,BioQuestion,BioResponse,FriendEmailAddress1,FriendEmailAddress2,,EmailAddress,Password,Role,FirstName,LastName,DateOfBirth,Gamertag,PhoneNumber,Gender,ProfilePictureUrl,StreetAddress,City,State,PostalCode,,Producer,GameTitle,GameGenre,NumberOfPlayers,,EmailAddress,Producer,GameTitle,GamingPlatform,HoursOfGamePlay,,EmailAddress,Producer,GameTitle,PlayerRole,RolePriority,,EmailAddress,BioQuestion,BioResponse,,FriendEmailAddress1,FriendEmailAddress2,RequestStatus,RequestedBy,Friends?
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
