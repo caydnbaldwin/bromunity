@@ -1,6 +1,5 @@
 -- Create the database
 CREATE DATABASE bromunity;
-\c bromunity;
 
 -------------------------------
 -- ENUM DEFINITIONS
