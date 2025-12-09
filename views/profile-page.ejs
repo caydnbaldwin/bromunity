@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feed</title>
+</head>
+<body>
+  <% if (errorMessage !== null && errorMessage !== "") { %>
+    <p><%= errorMessage %></p>
+  <% } %>
+  <h1>profile-page.ejs</h1>
+  <a href="/authentication/logout">Logout</a>
+  <% if (session?.profiles !== null && session?.profiles > 0) { %>
+    <% for (let profile in session.profiles) { %>
+      <p><%= profile %>: <%= profiles[profile] %></p>
+      <% for (let attribute in profile) { %>
+        <p><%= attribute %>: <%= profile[attribute] %></p>
+      <% } %>
+    <% } %>
+    <% } else { %>
+      <p>No profiles exist for you account.</p>
+    <% } %>
+</body>
+</html>

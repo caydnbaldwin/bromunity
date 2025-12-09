@@ -1,0 +1,30 @@
+{
+  "name": "bromunity",
+  "version": "1.0.0",
+  "description": "An app that supports the mental health of men through gaming.",
+  "homepage": "https://github.com/caydnbaldwin/bromunity#readme",
+  "bugs": {
+    "url": "https://github.com/caydnbaldwin/bromunity/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caydnbaldwin/bromunity.git"
+  },
+  "license": "ISC",
+  "author": "Caydn Baldwin, Brady Bates, Peter Young, Jacob Woodward",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "express-session": "^1.18.2",
+    "knex": "^3.1.0",
+    "multer": "^2.0.2",
+    "pg": "^8.16.3"
+  }
+}
