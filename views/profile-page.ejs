@@ -13,15 +13,18 @@
   <% } %>
   <h1>profile-page.ejs</h1>
   <a href="/authentication/logout">Logout</a>
-  <% if (session?.profiles !== null && session?.profiles > 0) { %>
-    <% for (let profile in session.profiles) { %>
-      <p><%= profile %>: <%= profiles[profile] %></p>
+  <a href="/profiles/profile/add">Add Profile</a>
+  <% if (session.profiles !== null && session.profiles.length > 0) { %>
+    <% for (let profile of session.profiles) { %>
+      <p>Profile: <%= session.person.first_name %></p>
+      <a href="/profiles/profile/edit/<%= profile.person_id %>/<%= profile.game_id %>">Edit Profile</a>
+      <a href="/profiles/profile/delete/<%= profile.person_id %>/<%= profile.game_id %>">Delete Profile</a>
       <% for (let attribute in profile) { %>
         <p><%= attribute %>: <%= profile[attribute] %></p>
       <% } %>
     <% } %>
-    <% } else { %>
-      <p>No profiles exist for you account.</p>
-    <% } %>
+  <% } else { %>
+    <p>No profiles exist for you account.</p>
+  <% } %>
 </body>
 </html>

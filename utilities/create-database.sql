@@ -10,7 +10,7 @@ CREATE TYPE game_genre_enum AS ENUM (
   'Action', 'Adventure', 'RPG', 'Simulation', 'Strategy',
   'Sports', 'Racing', 'Fighting', 'Shooter', 'Puzzle',
   'Platformer', 'Survival', 'Horror', 'MMO', 'Party',
-  'Sandbox', 'Open-World'
+  'Sandbox', 'Open-World', 'Battle Royale'
 );
 CREATE TYPE gaming_platform_enum AS ENUM ('PC', 'PlayStation', 'Xbox', 'Nintendo Switch', 'Mobile');
 CREATE TYPE status_enum AS ENUM ('Pending', 'Accepted', 'Declined');
