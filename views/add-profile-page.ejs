@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Profile</title>
+</head>
+<body>
+  <% if (errorMessage !== null && errorMessage !== "") { %>
+    <p><%= errorMessage %></p>
+    <% } %>
+  <h1>add-profile-page.ejs</h1>
+  <a href="/profiles/profile/<%= params.person_id %>">Back</a>
+  <form action="/profiles/profile/add" method="post">
+    <label for="game_title">Game Title</label>
+    <select name="game_id" id="game_id">
+      <% for (game of session.games) { %>
+        <option value=<%= game.game_id %>><%= game.game_title %></option>
+      <% } %>
+    </select>
+    <label for="gaming_platform">Gaming Platform</label>
+    <select name="gaming_platform" id="gaming_platform">
+      <option value="PC">PC</option>
+      <option value="PlayStation">PlayStation</option>
+      <option value="Xbox">Xbox</option>
+      <option value="Nintendo Switch">Nintendo Switch</option>
+      <option value="Mobile">Mobile</option>
+    </select>
+    <label for="description">Description</label>
+    <input type="text" id="description" name="description" required>
+    <label for="hours_of_gameplay">Hours of Gameplay</label>
+    <input type="number" id="hours_of_gameplay" name="hours_of_gameplay" placeholder="100" required>
+    <button type="submit">Create Profile</button>
+  </form>
+</body>
+</html>

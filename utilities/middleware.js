@@ -2,7 +2,7 @@ class Middleware {
   authenticate(req, res, next) {
     console.log(`${req.method} ${req.url}`);
     
-    const publicPaths = ['/', '/favicon.ico', '/authentication/error', '/authentication/signup', '/authentication/login'];
+    const publicPaths = ['/', '/favicon.ico', '/authentication/signup', '/authentication/login'];
 
     if (publicPaths.includes(req.path)) {
       return next();
@@ -12,7 +12,7 @@ class Middleware {
       return next();
     };
 
-    return res.redirect('/authentication/error');
+    return res.render('login-page', {errorMessage: 'Please login to access that page.'});
   };
 };
 

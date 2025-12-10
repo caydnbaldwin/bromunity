@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile</title>
+</head>
+<body>
+  <% if (errorMessage !== null && errorMessage !== "") { %>
+    <p><%= errorMessage %></p>
+    <% } %>
+    <% const profile = session.profiles.find(p => p.person_id == params.person_id && p.game_id == params.game_id) %>
+  <h1>edit-profile-page.ejs</h1>
+  <a href="/profiles/profile/<%= params.person_id %>">Back</a>
+  <form action="/profiles/profile/edit/<%= params.person_id %>/<%= params.game_id %>" method="post">
+    <label for="game_title">Game Title</label>
+    <select name="game_id" id="game_id">
+      <% for (game of session.games) { %>
+        <% if (game.game_id === params.game_id) { %>
+          <option value=<%= game.game_id %> selected><%= game.game_title %></option>
+        <% } else { %>
+          <option value=<%= game.game_id %>><%= game.game_title %></option>
+        <% } %>
+      <% } %>
+    </select>
+    <label for="gaming_platform">Gaming Platform</label>
+    <select name="gaming_platform" id="gaming_platform">
+      <option value="PC" <%= profile.gaming_platform === 'PC' ? 'selected' : '' %>>PC</option>
+      <option value="PlayStation" <%= profile.gaming_platform === 'PlayStation' ? 'selected' : '' %>>PlayStation</option>
+      <option value="Xbox" <%= profile.gaming_platform === 'Xbox' ? 'selected' : '' %>>Xbox</option>
+      <option value="Nintendo Switch" <%= profile.gaming_platform === 'Nintendo Switch' ? 'selected' : '' %>>Nintendo Switch</option>
+      <option value="Mobile" <%= profile.gaming_platform === 'Mobile' ? 'selected' : '' %>>Mobile</option>
+    </select>
+    <label for="description">Description</label>
+    <input type="text" id="description" name="description" value="<%= profile.description %>" required>
+    <label for="hours_of_gameplay">Hours of Gameplay</label>
+    <input type="number" id="hours_of_gameplay" name="hours_of_gameplay" value="<%= profile.hours_of_gameplay %>" required>
+    <button type="submit">Create Profile</button>
+  </form>
+</body>
+</html>
