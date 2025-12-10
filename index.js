@@ -12,6 +12,7 @@ const middleware = require('./utilities/middleware');
 const authenticationRouter = require('./api/authentication/AuthenticationRouter');
 const personsRouter = require('./api/persons/PersonsRouter');
 const profilesRouter = require('./api/profiles/ProfilesRouter');
+const friendshipsRouter = require('./api/friendships/FriendshipsRouter');
 
 // app
 let app = express();
@@ -35,6 +36,7 @@ app.use(middleware.authenticate);
 app.use('/authentication', authenticationRouter);
 app.use('/persons', personsRouter);
 app.use('/profiles', profilesRouter);
+app.use('/friendships', friendshipsRouter);
 app.get('/', (req, res) => {
   res.render('bromunity-page');
 });

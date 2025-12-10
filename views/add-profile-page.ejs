@@ -10,7 +10,7 @@
     <p><%= errorMessage %></p>
     <% } %>
   <h1>add-profile-page.ejs</h1>
-  <a href="/profiles/profile/<%= params.person_id %>">Back</a>
+  <a href="/profiles/profile/<%= session.person.person_id %>">Back</a>
   <form action="/profiles/profile/add" method="post">
     <label for="game_title">Game Title</label>
     <select name="game_id" id="game_id">

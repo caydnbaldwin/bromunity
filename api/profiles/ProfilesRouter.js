@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const profilesController = require('./ProfilesController');
 
+router.get('/feed', profilesController.getFeedPage);
 router.get('/profile/add', profilesController.getAddProfilePage);
 router.post('/profile/add', profilesController.postAddProfile);
 router.get('/profile/edit/:person_id/:game_id', profilesController.getEditProfile);

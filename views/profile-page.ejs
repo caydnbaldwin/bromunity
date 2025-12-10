@@ -13,6 +13,9 @@
   <% } %>
   <h1>profile-page.ejs</h1>
   <a href="/authentication/logout">Logout</a>
+  <a href="/profiles/feed">Feed</a>
+  <a href="/friendships/pending">Requests: <%= session.friendships.pending.pending %></a>
+  <a href="/friendships/accepted">Friends: <%= session.friendships.accepted.accepted %></a>
   <a href="/profiles/profile/add">Add Profile</a>
   <% if (session.profiles !== null && session.profiles.length > 0) { %>
     <% for (let profile of session.profiles) { %>
