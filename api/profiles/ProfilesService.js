@@ -1,12 +1,26 @@
 const profilesDao = require('./ProfilesDao');
 
 class ProfilesService {
+  async getFeedPage(session) {
+    try {
+      const person_id = session.person.person_id;
+      const {person, profiles} = await profilesDao.getFeedPage(person_id);
+      console.log('person:', person);
+      console.log('profiles:', profiles);
+      return {person, profiles};
+    } catch (error) {
+      throw error;
+    };
+  };
+
   async getProfilePage(session) {
     try {
       const person_id = session.person.person_id;
-      const profiles = await profilesDao.getProfilePage(person_id);
-      if (profiles) {
-        return profiles;
+      const {profiles, friendships} = await profilesDao.getProfilePage(person_id);
+      console.log('profiles:', profiles);
+      console.log('friendships:', friendships);
+      if (profiles && friendships) {
+        return {profiles: profiles, friendships: friendships};
       } else {
         throw new Error('Failed get profiles.');
       };

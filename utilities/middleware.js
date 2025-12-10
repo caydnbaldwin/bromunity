@@ -2,7 +2,7 @@ class Middleware {
   authenticate(req, res, next) {
     console.log(`${req.method} ${req.url}`);
     
-    const publicPaths = ['/', '/favicon.ico', '/authentication/signup', '/authentication/login'];
+    const publicPaths = ['/', '/favicon.ico', '/authentication/signup', '/authentication/login', '/authentication/logout'];
 
     if (publicPaths.includes(req.path)) {
       return next();

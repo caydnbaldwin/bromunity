@@ -1,11 +1,25 @@
 const profilesService = require('./ProfilesService');
 
 class ProfilesController {
+  async getFeedPage(req, res) {
+    try {
+      const {person, profiles} = await profilesService.getFeedPage(req.session);
+      req.session.feed = req.session.feed || {};
+      req.session.feed.person = person;
+      req.session.feed.profiles = profiles;
+      console.log('req.session.feed.profiles:', req.session.feed.profiles)
+      res.render('feed-page', {errorMessage: null, session: req.session});
+    } catch (error) {
+      res.render('feed-page', {errorMessage: error, session: req.session});
+    };
+  };
+
   async getProfilePage(req, res) {
     try {
-      const profiles = await profilesService.getProfilePage(req.session);
+      const {profiles, friendships} = await profilesService.getProfilePage(req.session);
       req.session.profiles = profiles;
-      if (profiles > 0) {
+      req.session.friendships = friendships;
+      if (profiles.length > 0) {
         res.render('profile-page', {errorMessage: null, session: req.session});
       } else {
         res.render('profile-page', {errorMessage: null, session: req.session});

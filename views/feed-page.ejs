@@ -13,9 +13,21 @@
   <% } %>
   <h1>feed-page.ejs</h1>
   <a href="/authentication/logout">Logout</a>
-  <% if (session?.authentication !== null && session?.authentication !== "") { %>
-    <% for (let attribute in session.authentication) { %>
-      <p><%= attribute %>: <%= session.authentication[attribute] %></p>
+  <a href="/profiles/profile/<%= session.person.person_id %>">Profile</a>
+  <% if (session?.feed?.person) { %>
+    <p>First Name: <%= session.feed.person.first_name%></p>
+    <p>Gender: <%= session.feed.person.gender%></p>
+    <a href="/friendships/nofriend/<%= session.feed.person.person_id %>">No Friend</a>
+    <a href="/friendships/yesfriend/<%= session.feed.person.person_id %>">Friend</a>
+  <% } else { %>
+    <p>No more people to show in your feed.</p>
+  <% } %>
+  <% if (session?.feed?.profiles !== null && session?.feed?.profiles.length > 0) { %>
+    <% for (const profile of session.feed.profiles) { %>
+      <p>Game: <%= profile.game_id %></p>
+      <p>Gaming Platform: <%= profile.gaming_platform %></p>
+      <p>Description: <%= profile.description %></p>
+      <p>Hours of Gameplay: <%= profile.hours_of_gameplay %></p>
     <% } %>
   <% } %>
 </body>
