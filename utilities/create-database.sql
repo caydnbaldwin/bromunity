@@ -76,6 +76,7 @@ CREATE TABLE friendships (
   person_id_1 INT NOT NULL,
   person_id_2 INT NOT NULL,
   status status_enum,
+  sender_id INT NOT NULL,
   CHECK (person_id_1 < person_id_2),
   PRIMARY KEY (person_id_1, person_id_2),
   FOREIGN KEY (person_id_1) REFERENCES persons(person_id) ON DELETE CASCADE,

@@ -20,6 +20,10 @@
   <% if (session.profiles !== null && session.profiles.length > 0) { %>
     <% for (let profile of session.profiles) { %>
       <p>Profile: <%= session.person.first_name %></p>
+      <!-- Naming conventions for routes? -->
+      <!-- POST for creation, PUT for update, but would PUT work with <form>? -->
+      <!-- Use DELETE /profiles/profile/:person_id/:game_id vs GET /profiles/profile/delete/:person_id/:game_id for delete operations -->
+      <!-- see file:///c:/users/caydn/bromunity/api/profiles/ProfilesRouter.js#L8 -->
       <a href="/profiles/profile/edit/<%= profile.person_id %>/<%= profile.game_id %>">Edit Profile</a>
       <a href="/profiles/profile/delete/<%= profile.person_id %>/<%= profile.game_id %>">Delete Profile</a>
       <% for (let attribute in profile) { %>

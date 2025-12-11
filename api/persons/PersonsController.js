@@ -6,6 +6,7 @@ class PersonsController {
       const person = await personsService.getOnboardingPage(req.session);
       if (person) {
         req.session.person = person;
+        // User is already onboarded, now we call the route to load the profile page... see file:///c:/users/caydn/bromunity/index.js#L38
         res.redirect(`/profiles/profile/${person.person_id}`);
       } else {
         res.render('onboarding-page', {errorMessage: null, session: req.session});

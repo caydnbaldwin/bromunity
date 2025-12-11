@@ -16,12 +16,16 @@ class ProfilesService {
   async getProfilePage(session) {
     try {
       const person_id = session.person.person_id;
+      // a god-method to run all relevant queries to get profiles and friendships objects
       const {profiles, friendships} = await profilesDao.getProfilePage(person_id);
       console.log('profiles:', profiles);
       console.log('friendships:', friendships);
+      // verify they exist
       if (profiles && friendships) {
+        // return them
         return {profiles: profiles, friendships: friendships};
       } else {
+        // otherwise throw a generic error
         throw new Error('Failed get profiles.');
       };
     } catch (error) {
