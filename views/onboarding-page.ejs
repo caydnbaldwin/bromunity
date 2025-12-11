@@ -6,9 +6,30 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
   <title>Onboarding</title>
+  <style>
+    :root {
+      --color-white: #FFFFFF;
+      --color-light-gray: #D9D9D9;
+      --color-black: #070707;
+      --color-gray: #696D7D;
+      --color-dark-blue: #1D3557;
+      --bs-body-bg: var(--color-white);
+      --bs-body-color: var(--color-black);
+      --bs-primary: var(--color-dark-blue);
+      --bs-primary-rgb: 29, 53, 87;
+      --bs-secondary: var(--color-gray);
+      --bs-secondary-rgb: 105, 109, 125;
+      --bs-light: var(--color-light-gray);
+      --bs-light-rgb: 217, 217, 217;
+      --bs-body-font-family: 'Montserrat', sans-serif;
+      --bs-heading-font-family: 'DM Serif Display', serif;
+      --bs-gradient: linear-gradient(135deg, var(--color-dark-blue), var(--color-gray));
+    }
+  </style>
 </head>
-<body class="min-vh-100 d-flex align-items-center" style="background: linear-gradient(135deg, #1D3557 0%, #696D7D 100%);">
-  <a href="/" aria-label="Back" class="position-fixed top-0 start-0 m-3 z-3 btn btn-light rounded-pill shadow d-inline-flex align-items-center gap-2 border-0 px-3 py-2" style="background-color:#FFFFFF; color:#1D3557;">
+<body class="min-vh-100 d-flex align-items-center bg-primary bg-gradient">
+  <!-- Back Link -->
+  <a href="/" aria-label="Back" class="position-fixed top-0 start-0 m-3 z-3 btn btn-light text-primary rounded-pill shadow border-0 d-inline-flex align-items-center gap-2 px-3 py-2">
     <span class="fw-bold">←</span>
     <span class="fw-semibold">Back</span>
   </a>
@@ -20,31 +41,32 @@
           <div class="alert alert-danger" role="alert"><%= errorMessage %></div>
         <% } %>
 
-        <div class="card shadow rounded-4 border-0" style="background-color:#FFFFFF;">
+        <!-- Onboarding Form -->
+        <div class="card shadow rounded-4 border-0 bg-white">
           <div class="card-body p-4 p-md-5">
-            <h1 class="h3 mb-4 text-center" style="color:#1D3557; font-family: 'DM Serif Display', serif;">Tell Us About You</h1>
+            <h1 class="h3 mb-4 text-center text-primary">Tell Us About You</h1>
             <form action="/persons/onboarding" method="post" class="needs-validation" novalidate>
               <div class="row g-3">
                 <div class="col-md-6">
-                  <label for="first_name" class="form-label" style="color:#070707;">First Name</label>
+                  <label for="first_name" class="form-label text-dark">First Name</label>
                   <input type="text" id="first_name" name="first_name" class="form-control" placeholder="John" required autofocus>
                 </div>
                 <div class="col-md-6">
-                  <label for="last_name" class="form-label" style="color:#070707;">Last Name</label>
+                  <label for="last_name" class="form-label text-dark">Last Name</label>
                   <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Smith" required>
                 </div>
 
                 <div class="col-md-6">
-                  <label for="date_of_birth" class="form-label" style="color:#070707;">Date of Birth</label>
+                  <label for="date_of_birth" class="form-label text-dark">Date of Birth</label>
                   <input type="date" id="date_of_birth" name="date_of_birth" class="form-control" required>
                 </div>
                 <div class="col-md-6">
-                  <label for="phone_number" class="form-label" style="color:#070707;">Phone Number</label>
+                  <label for="phone_number" class="form-label text-dark">Phone Number</label>
                   <input type="number" id="phone_number" name="phone_number" class="form-control" placeholder="8012221234" required>
                 </div>
 
                 <div class="col-md-6">
-                  <label for="gender" class="form-label" style="color:#070707;">Gender</label>
+                  <label for="gender" class="form-label text-dark">Gender</label>
                   <select id="gender" name="gender" class="form-select">
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
@@ -52,16 +74,16 @@
                 </div>
 
                 <div class="col-12">
-                  <label for="street_address" class="form-label" style="color:#070707;">Street Address</label>
+                  <label for="street_address" class="form-label text-dark">Street Address</label>
                   <input type="text" id="street_address" name="street_address" class="form-control" required>
                 </div>
 
                 <div class="col-md-6">
-                  <label for="city" class="form-label" style="color:#070707;">City</label>
+                  <label for="city" class="form-label text-dark">City</label>
                   <input type="text" id="city" name="city" class="form-control" required>
                 </div>
                 <div class="col-md-3">
-                  <label for="state" class="form-label" style="color:#070707;">State</label>
+                  <label for="state" class="form-label text-dark">State</label>
                   <select id="state" name="state" class="form-select">
                     <option value="AL">AL</option>
                     <option value="AK">AK</option>
@@ -116,12 +138,12 @@
                   </select>
                 </div>
                 <div class="col-md-3">
-                  <label for="postal_code" class="form-label" style="color:#070707;">Postal Code</label>
+                  <label for="postal_code" class="form-label text-dark">Postal Code</label>
                   <input type="number" id="postal_code" name="postal_code" class="form-control" required>
                 </div>
               </div>
 
-              <button type="submit" class="btn w-100 mt-4" style="background-color:#1D3557; color:#FFFFFF;">Onboard</button>
+              <button type="submit" class="btn btn-primary bg-primary border-0 text-white fw-semibold w-100 mt-4">Onboard</button>
             </form>
           </div>
         </div>
