@@ -25,6 +25,28 @@
       --bs-heading-font-family: 'DM Serif Display', serif;
       --bs-gradient: linear-gradient(135deg, var(--color-dark-blue), var(--color-gray));
     }
+
+    .profile-scroll {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.75rem;
+    }
+
+    .profile-scroll .profile-card {
+      min-width: 320px;
+      flex: 0 0 auto;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .profile-attribute-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
   </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-body text-body">
@@ -64,24 +86,22 @@
       <% } %>
 
       <% if (session.profiles !== null && session.profiles.length > 0) { %>
-        <div class="row g-4">
+        <div class="profile-scroll">
           <% session.profiles.forEach(function(profile) { %>
-            <div class="col-12 col-md-6 col-xl-4">
-              <div class="card h-100 shadow-sm border-0">
-                <div class="card-body d-flex flex-column gap-2">
-                  <h2 class="h4 text-primary mb-0"><%= session.person.first_name %>'s Profile</h2>
-                  <div class="d-flex flex-wrap gap-2">
-                    <a href="/profiles/profile/edit/<%= profile.person_id %>/<%= profile.game_id %>" class="btn btn-outline-primary btn-sm fw-semibold">Edit</a>
-                    <a href="/profiles/profile/delete/<%= profile.person_id %>/<%= profile.game_id %>" class="btn btn-outline-danger btn-sm fw-semibold">Delete</a>
-                  </div>
-                  <div class="mt-2">
-                    <% Object.keys(profile).forEach(function(attribute) { %>
-                      <div class="d-flex justify-content-between border-bottom py-1">
-                        <span class="fw-semibold text-secondary text-uppercase small"><%= attribute.replace(/_/g, ' ') %></span>
-                        <span class="text-dark"><%= profile[attribute] %></span>
-                      </div>
-                    <% }); %>
-                  </div>
+            <div class="card profile-card h-100 shadow-sm border-0">
+              <div class="card-body d-flex flex-column gap-2">
+                <h2 class="h4 text-primary mb-0"><%= session.person.first_name %>'s Profile</h2>
+                <div class="d-flex flex-wrap gap-2">
+                  <a href="/profiles/profile/edit/<%= profile.person_id %>/<%= profile.game_id %>" class="btn btn-primary bg-primary border-0 text-white btn-sm fw-semibold">Edit</a>
+                  <a href="/profiles/profile/delete/<%= profile.person_id %>/<%= profile.game_id %>" class="btn btn-outline-secondary btn-sm fw-semibold">Delete</a>
+                </div>
+                <div class="mt-2">
+                  <% Object.keys(profile).forEach(function(attribute) { %>
+                    <div class="profile-attribute-row border-bottom py-1">
+                      <span class="fw-semibold text-dark text-uppercase small flex-grow-1"><%= attribute.replace(/_/g, ' ') %></span>
+                      <span class="text-dark text-break flex-grow-1 text-end"><%= profile[attribute] %></span>
+                    </div>
+                  <% }); %>
                 </div>
               </div>
             </div>
