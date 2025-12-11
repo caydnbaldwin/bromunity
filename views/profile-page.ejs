@@ -90,17 +90,19 @@
           <% session.profiles.forEach(function(profile) { %>
             <div class="card profile-card h-100 shadow-sm border-0">
               <div class="card-body d-flex flex-column gap-2">
-                <h2 class="h4 text-primary mb-0"><%= session.person.first_name %>'s Profile</h2>
+                <h2 class="h4 text-primary mb-0"><%= session.person.first_name %>'s <%= profile.game_title %> Profile</h2>
                 <div class="d-flex flex-wrap gap-2">
                   <a href="/profiles/profile/edit/<%= profile.person_id %>/<%= profile.game_id %>" class="btn btn-primary bg-primary border-0 text-white btn-sm fw-semibold">Edit</a>
                   <a href="/profiles/profile/delete/<%= profile.person_id %>/<%= profile.game_id %>" class="btn btn-outline-secondary btn-sm fw-semibold">Delete</a>
                 </div>
                 <div class="mt-2">
                   <% Object.keys(profile).forEach(function(attribute) { %>
-                    <div class="profile-attribute-row border-bottom py-1">
-                      <span class="fw-semibold text-dark text-uppercase small flex-grow-1"><%= attribute.replace(/_/g, ' ') %></span>
-                      <span class="text-dark text-break flex-grow-1 text-end"><%= profile[attribute] %></span>
-                    </div>
+                    <% if (attribute !== 'person_id' && attribute !== 'game_id' && attribute !== 'game_title') { %>
+                      <div class="profile-attribute-row border-bottom py-1">
+                        <span class="fw-semibold text-dark text-uppercase small flex-grow-1"><%= attribute.replace(/_/g, ' ') %></span>
+                        <span class="text-dark text-break flex-grow-1 text-end"><%= profile[attribute] %></span>
+                      </div>
+                    <% } %>
                   <% }); %>
                 </div>
               </div>
