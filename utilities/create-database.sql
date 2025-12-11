@@ -82,3 +82,19 @@ CREATE TABLE friendships (
   FOREIGN KEY (person_id_1) REFERENCES persons(person_id) ON DELETE CASCADE,
   FOREIGN KEY (person_id_2) REFERENCES persons(person_id) ON DELETE CASCADE
 );
+
+-------------------------------
+-- INSERT 10 GAMES
+-------------------------------
+INSERT INTO games (producer, game_title, game_genre)
+VALUES
+  ('Nintendo', 'The Legend of Zelda: Breath of the Wild', 'Open-World'),
+  ('FromSoftware', 'Elden Ring', 'RPG'),
+  ('Valve', 'Portal 2', 'Puzzle'),
+  ('Mojang', 'Minecraft', 'Sandbox'),
+  ('Rockstar Games', 'Grand Theft Auto V', 'Action'),
+  ('CD Projekt Red', 'The Witcher 3: Wild Hunt', 'RPG'),
+  ('Blizzard Entertainment', 'Overwatch', 'Shooter'),
+  ('Square Enix', 'Final Fantasy XV', 'RPG'),
+  ('Playground Games', 'Forza Horizon 5', 'Racing'),
+  ('Epic Games', 'Fortnite', 'Battle Royale');
