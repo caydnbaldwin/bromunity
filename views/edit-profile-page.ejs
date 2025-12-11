@@ -3,39 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
   <title>Edit Profile</title>
 </head>
-<body>
+<body class="min-vh-100 d-flex align-items-center" style="background: linear-gradient(135deg, #1D3557 0%, #696D7D 100%);">
   <% if (errorMessage !== null && errorMessage !== "") { %>
-    <p><%= errorMessage %></p>
-    <% } %>
-    <% const profile = session.profiles.find(p => p.person_id == params.person_id && p.game_id == params.game_id) %>
-  <h1>edit-profile-page.ejs</h1>
-  <a href="/profiles/profile/<%= params.person_id %>">Back</a>
-  <form action="/profiles/profile/edit/<%= params.person_id %>/<%= params.game_id %>" method="post">
-    <label for="game_title">Game Title</label>
-    <select name="game_id" id="game_id">
-      <% for (game of session.games) { %>
-        <% if (game.game_id === params.game_id) { %>
-          <option value=<%= game.game_id %> selected><%= game.game_title %></option>
-        <% } else { %>
-          <option value=<%= game.game_id %>><%= game.game_title %></option>
-        <% } %>
-      <% } %>
-    </select>
-    <label for="gaming_platform">Gaming Platform</label>
-    <select name="gaming_platform" id="gaming_platform">
-      <option value="PC" <%= profile.gaming_platform === 'PC' ? 'selected' : '' %>>PC</option>
-      <option value="PlayStation" <%= profile.gaming_platform === 'PlayStation' ? 'selected' : '' %>>PlayStation</option>
-      <option value="Xbox" <%= profile.gaming_platform === 'Xbox' ? 'selected' : '' %>>Xbox</option>
-      <option value="Nintendo Switch" <%= profile.gaming_platform === 'Nintendo Switch' ? 'selected' : '' %>>Nintendo Switch</option>
-      <option value="Mobile" <%= profile.gaming_platform === 'Mobile' ? 'selected' : '' %>>Mobile</option>
-    </select>
-    <label for="description">Description</label>
-    <input type="text" id="description" name="description" value="<%= profile.description %>" required>
-    <label for="hours_of_gameplay">Hours of Gameplay</label>
-    <input type="number" id="hours_of_gameplay" name="hours_of_gameplay" value="<%= profile.hours_of_gameplay %>" required>
-    <button type="submit">Create Profile</button>
-  </form>
+    <div class="container"><div class="alert alert-danger" role="alert"><%= errorMessage %></div></div>
+  <% } %>
+  <% const profile = session.profiles.find(p => p.person_id == params.person_id && p.game_id == params.game_id) %>
+
+  <a href="/profiles/profile/<%= params.person_id %>" aria-label="Back" class="position-fixed top-0 start-0 m-3 z-3 btn btn-light rounded-pill shadow d-inline-flex align-items-center gap-2 border-0 px-3 py-2" style="background-color:#FFFFFF; color:#1D3557;">
+    <span class="fw-bold">←</span>
+    <span class="fw-semibold">Back</span>
+  </a>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10 col-lg-7">
+        <div class="card shadow rounded-4 border-0" style="background-color:#FFFFFF;">
+          <div class="card-body p-4 p-md-5">
+            <h1 class="h3 mb-4 text-center" style="color:#1D3557; font-family: 'DM Serif Display', serif;">Edit Game Profile</h1>
+
+            <form action="/profiles/profile/edit/<%= params.person_id %>/<%= params.game_id %>" method="post" class="needs-validation" novalidate>
+              <div class="row g-3">
+                <div class="col-12">
+                  <label for="game_id" class="form-label" style="color:#070707;">Game Title</label>
+                  <select name="game_id" id="game_id" class="form-select" required>
+                    <% for (game of session.games) { %>
+                      <% if (game.game_id === params.game_id) { %>
+                        <option value=<%= game.game_id %> selected><%= game.game_title %></option>
+                      <% } else { %>
+                        <option value=<%= game.game_id %>><%= game.game_title %></option>
+                      <% } %>
+                    <% } %>
+                  </select>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="gaming_platform" class="form-label" style="color:#070707;">Gaming Platform</label>
+                  <select name="gaming_platform" id="gaming_platform" class="form-select" required>
+                    <option value="PC" <%= profile.gaming_platform === 'PC' ? 'selected' : '' %>>PC</option>
+                    <option value="PlayStation" <%= profile.gaming_platform === 'PlayStation' ? 'selected' : '' %>>PlayStation</option>
+                    <option value="Xbox" <%= profile.gaming_platform === 'Xbox' ? 'selected' : '' %>>Xbox</option>
+                    <option value="Nintendo Switch" <%= profile.gaming_platform === 'Nintendo Switch' ? 'selected' : '' %>>Nintendo Switch</option>
+                    <option value="Mobile" <%= profile.gaming_platform === 'Mobile' ? 'selected' : '' %>>Mobile</option>
+                  </select>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="hours_of_gameplay" class="form-label" style="color:#070707;">Hours of Gameplay</label>
+                  <input type="number" id="hours_of_gameplay" name="hours_of_gameplay" class="form-control" value="<%= profile.hours_of_gameplay %>" required>
+                </div>
+
+                <div class="col-12">
+                  <label for="description" class="form-label" style="color:#070707;">Description</label>
+                  <input type="text" id="description" name="description" class="form-control" value="<%= profile.description %>" required>
+                </div>
+              </div>
+
+              <button type="submit" class="btn w-100 mt-4" style="background-color:#1D3557; color:#FFFFFF;">Save Changes</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 </html>
