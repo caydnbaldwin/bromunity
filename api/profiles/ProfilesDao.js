@@ -35,16 +35,13 @@ class ProfilesDao {
     };
   };
 
-  // god-method to grab all relevant data for the route
   async getProfilePage(person_id) {
     try {
-      // grab all profiles that the person owns
       const profiles = await knex
         .select('*')
         .from('profiles')
         .where('person_id', person_id)
         .leftJoin('games', 'profiles.game_id', 'games.game_id');
-      // grab all pending requests
       const pending = await knex
         .count('* as pending')
         .from('friendships')
@@ -53,7 +50,6 @@ class ProfilesDao {
               .orWhere('person_id_2', person_id)
         })
         .andWhere('status', 'Pending')
-      // grab all accepted requests
       const accepted = await knex
         .count('* as accepted')
         .from('friendships')
@@ -62,8 +58,6 @@ class ProfilesDao {
               .orWhere('person_id_2', person_id)
         })
         .andWhere('status', 'Accepted')
-      // return profiles as a list
-      // return pending and accepted enveloped inside of a parent object named friendships
       return {
         profiles,
         friendships: {
