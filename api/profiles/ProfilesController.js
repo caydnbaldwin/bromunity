@@ -16,10 +16,13 @@ class ProfilesController {
 
   async getProfilePage(req, res) {
     try {
+      // get profiles of the current user and the count of each of the respective friendships enveloped by the parent friendship object
       const {profiles, friendships} = await profilesService.getProfilePage(req.session);
+      // assign objects to session
       req.session.profiles = profiles;
       req.session.friendships = friendships;
       if (profiles.length > 0) {
+        // pass session to render the profile page
         res.render('profile-page', {errorMessage: null, session: req.session});
       } else {
         res.render('profile-page', {errorMessage: null, session: req.session});

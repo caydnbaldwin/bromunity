@@ -23,8 +23,8 @@ class ProfilesDao {
         profiles = await knex
           .select('*')
           .from('profiles')
-          .where('person_id', person.person_id)
-          .leftJoin('games', 'profiles.game_id', 'games.game_id');
+          .leftJoin('games', 'profiles.game_id', 'games.game_id')
+          .where('person_id', person.person_id);
       };
       return {person: person || [], profiles: profiles || []};
     } catch (err) {

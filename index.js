@@ -24,7 +24,7 @@ app.use(express.static("public"));
 app.use(
   session(
     {
-      secret: process.env.SESSION_SECRET,
+      secret: process.env.SESSION_SECRET || 'fallback_secret_key',
       resave: false,
       saveUninitialized: false,
     }
@@ -35,6 +35,7 @@ app.use(
 app.use(middleware.authenticate);
 app.use('/authentication', authenticationRouter);
 app.use('/persons', personsRouter);
+// catch the /profiles from /profiles/profile/:person_id, send to profiles router
 app.use('/profiles', profilesRouter);
 app.use('/friendships', friendshipsRouter);
 app.get('/', (req, res) => {
