@@ -13,8 +13,10 @@
       --color-black: #070707;
       --color-gray: #696D7D;
       --color-dark-blue: #1D3557;
-      --bs-primary: #1D3557; 
-      --bs-primary-rgb: 29, 53, 87;
+      --bs-primary: var(--color-black);
+      --bs-primary-rgb: 0, 0, 0;
+      /* --bs-primary: #1D3557; 
+      --bs-primary-rgb: 29, 53, 87; */
       --bs-light: var(--color-light-gray) !important;
     }
 
@@ -26,12 +28,17 @@
     }
 
     .text-primary {
-      color: #1D3557 !important;
+      /* color: #1D3557 !important; */
+      color: white;
     }
 
     body { font-family: 'Montserrat', sans-serif; }
 
     .feed-card { border: 0; }
+
+    /* .greentext {
+      color: #015d04 !important;
+    } */
   </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-body text-body">
@@ -84,7 +91,7 @@
         </div>
       <% } else { %>
         <div class="text-center py-5">
-          <p class="lead text-secondary mb-4">No more people to show in your feed.</p>
+          <p class="lead text-secondary mb-4 greentext">No more people to show in your feed.</p>
           <a href="/profiles/profile/<%= session.person.person_id %>" class="btn btn-primary bg-primary border-0 text-white fw-semibold px-4">View Your Profile</a>
         </div>
       <% } %>

@@ -15,8 +15,10 @@
       --color-dark-blue: #1D3557;
       --bs-body-bg: var(--color-white);
       --bs-body-color: var(--color-black);
-      --bs-primary: var(--color-dark-blue);
-      --bs-primary-rgb: 29, 53, 87;
+      /* --bs-primary: var(--color-dark-blue);
+      --bs-primary-rgb: 29, 53, 87; */
+      --bs-primary: var(--color-black);
+      --bs-primary-rgb: 0, 0, 0;
       --bs-secondary: var(--color-gray);
       --bs-secondary-rgb: 105, 109, 125;
       --bs-light: var(--color-light-gray);
@@ -25,9 +27,14 @@
       --bs-heading-font-family: 'DM Serif Display', serif;
       --bs-gradient: linear-gradient(135deg, var(--color-dark-blue), var(--color-gray));
     }
+
+    .greentext {
+      color: #029107 !important;
+    }
   </style>
 </head>
-<body class="min-vh-100 d-flex align-items-center bg-primary bg-gradient">
+<body class="min-vh-100 d-flex align-items-center bg-primary">
+<!-- <body class="min-vh-100 d-flex align-items-center bg-primary bg-gradient"></body> -->
   <!-- Back Link -->
   <a href="/" aria-label="Back" class="position-fixed top-0 start-0 m-3 z-3 btn btn-light text-primary rounded-pill shadow border-0 d-inline-flex align-items-center gap-2 px-3 py-2">
     <span class="fw-bold">←</span>
@@ -60,7 +67,7 @@
 
             <div class="text-center mt-3">
               <small class="text-muted">Already have an account?
-                <a href="/authentication/login" class="link-secondary fw-semibold">Login</a>
+                <a href="/authentication/login" class="link-secondary fw-semibold greentext">Login</a>
               </small>
             </div>
           </div>
