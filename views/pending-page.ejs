@@ -123,6 +123,10 @@
                     <div class="d-flex gap-2">
                       <a href="/friendships/accept/<%= request.sender_id %>" class="btn btn-primary bg-primary border-0 text-white btn-sm fw-semibold flex-grow-1">Accept</a>
                       <a href="/friendships/decline/<%= request.sender_id %>" class="btn btn-outline-secondary btn-sm fw-semibold flex-grow-1">Decline</a>
+                      <% 
+                        let senderPersonId = (request.sender_id === request.person_id_1) ? request.person_id_1 : request.person_id_2; 
+                      %>
+                      <a href="/profiles/profile/<%= senderPersonId %>" class="btn btn-light text-primary btn-sm fw-semibold flex-grow-1">View Profile</a>
                     </div>
                   </div>
                 </div>
@@ -176,6 +180,10 @@
                     </div>
                     <div>
                       <a href="/friendships/cancel/<%= request.person_id_2 %>" class="btn btn-outline-secondary btn-sm fw-semibold w-100">Cancel Request</a>
+                      <% 
+                        let recipientPersonId = (request.person_id_1 === session.person.person_id) ? request.person_id_2 : request.person_id_1; 
+                      %>
+                      <a href="/profiles/profile/<%= recipientPersonId %>" class="btn btn-light text-primary btn-sm fw-semibold w-100 mt-2">View Profile</a>
                     </div>
                   </div>
                 </div>
