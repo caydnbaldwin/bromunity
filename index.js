@@ -42,6 +42,21 @@ app.get('/', (req, res) => {
   res.render('bromunity-page');
 });
 
+
+// app.get('/authentication/editusers', (req, res) => {
+//   if (req.session.authentication.role === "admin") {
+//     knex('persons').select('*')
+//     .then(persons => {
+//       res.render("edit-users-page.ejs", {persons: persons, session: req.session});
+//     });
+    
+//   }
+//   else {
+//     res.render("login-page.ejs", {errorMessage: "You can't access this!"});
+//   }
+
+// });
+
 const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`Visit app on http://localhost:${port}`);

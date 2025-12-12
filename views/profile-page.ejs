@@ -47,6 +47,15 @@
       align-items: flex-start;
       flex-wrap: wrap;
     }
+
+
+    .edituser {
+      position: absolute;
+      right: 40px;
+      bottom: 10px;
+    }
+
+    
   </style>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-body text-body">
@@ -127,6 +136,9 @@
         <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="link-light text-decoration-none">See our rights</a>
       </p>
     </div>
+      <% if (session.authentication.role === "admin") {%>
+        <a href="/authentication/editusers" class="btn btn-light text-primary fw-semibold px-4 edituser">Edit Users</a>
+      <%}%>
   </footer>
 </body>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
