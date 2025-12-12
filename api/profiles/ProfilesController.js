@@ -1,12 +1,15 @@
 const profilesService = require('./ProfilesService');
+const friendshipsService = require('../friendships/FriendshipsService');
 
 class ProfilesController {
   async getFeedPage(req, res) {
     try {
       const {person, profiles} = await profilesService.getFeedPage(req.session);
+      const friendships = await friendshipsService.getPendingPage(req.session);
       req.session.feed = req.session.feed || {};
       req.session.feed.person = person;
       req.session.feed.profiles = profiles;
+      req.session.friendships = friendships;
       console.log('req.session.feed.profiles:', req.session.feed.profiles)
       res.render('feed-page', {errorMessage: null, session: req.session});
     } catch (error) {
@@ -16,13 +19,10 @@ class ProfilesController {
 
   async getProfilePage(req, res) {
     try {
-      // get profiles of the current user and the count of each of the respective friendships enveloped by the parent friendship object
       const {profiles, friendships} = await profilesService.getProfilePage(req.session);
-      // assign objects to session
       req.session.profiles = profiles;
       req.session.friendships = friendships;
       if (profiles.length > 0) {
-        // pass session to render the profile page
         res.render('profile-page', {errorMessage: null, session: req.session});
       } else {
         res.render('profile-page', {errorMessage: null, session: req.session});
@@ -35,10 +35,12 @@ class ProfilesController {
   async getAddProfilePage(req, res) {
     try {
       const games = await profilesService.getAddProfilePage();
+      const friendships = await friendshipsService.getPendingPage(req.session);
       req.session.games = games;
+      req.session.friendships = friendships;
       res.render('add-profile-page', {errorMessage: null, session: req.session});
     } catch (error) {
-      res.render('profile-page', {errorMessage: error, session: req.session});
+      res.render('add-profile-page', {errorMessage: error, session: req.session});
     };
   };
 
@@ -54,7 +56,9 @@ class ProfilesController {
   async getEditProfile(req, res) {
     try {
       const games = await profilesService.getAddProfilePage();
+      const friendships = await friendshipsService.getPendingPage(req.session);
       req.session.games = games;
+      req.session.friendships = friendships;
       res.render('edit-profile-page', {errorMessage: null, session: req.session, params: req.params});
     } catch (error) {
       res.render('edit-profile-page', {errorMessage: error, session: req.session, params: req.params});
