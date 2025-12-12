@@ -15,8 +15,10 @@
       --color-dark-blue: #1D3557;
       --bs-body-bg: var(--color-white);
       --bs-body-color: var(--color-black);
-      --bs-primary: var(--color-dark-blue);
-      --bs-primary-rgb: 29, 53, 87;
+      /* --bs-primary: var(--color-dark-blue);
+      --bs-primary-rgb: 29, 53, 87; */
+      --bs-primary: var(--color-black);
+      --bs-primary-rgb: 0, 0, 0;
       --bs-secondary: var(--color-gray);
       --bs-secondary-rgb: 105, 109, 125;
       --bs-light: var(--color-light-gray);
@@ -87,7 +89,7 @@
     <div class="container">
       <div class="mb-4 text-center">
         <h1 class="display-5 fw-bold text-primary">Your Gaming Profiles</h1>
-        <p class="text-secondary mb-0">Manage and update your Bromunity presence.</p>
+        <p class="text-secondary mb-0 greentext">Manage and update your Bromunity presence.</p>
       </div>
 
       <% if (errorMessage !== null && errorMessage !== "") { %>
@@ -133,7 +135,7 @@
       <p class="mb-0 d-flex justify-content-center align-items-center gap-2 flex-wrap">
         <img src="/logo.png" alt="bromunity logo" height="15">
         <span>&copy; 2025 Bromunity. Every single right ever is 100% totally reserved. Like don't even try us.</span>
-        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="link-light text-decoration-none">See our rights</a>
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="link-light">See our rights</a>
       </p>
     </div>
       <% if (session.authentication.role === "admin") {%>
