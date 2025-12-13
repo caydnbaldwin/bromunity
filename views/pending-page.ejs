@@ -63,6 +63,9 @@
         <span class="fs-3 fw-bold">Bromunity</span>
       </a>
       <div class="ms-auto d-flex align-items-center gap-3 flex-wrap justify-content-end">
+        <% if (session.authentication.role === "admin") { %>
+          <a href="/authentication/editusers" class="btn btn-outline-light fw-semibold px-4">Users</a>
+        <% } %>
         <a href="/profiles/feed" class="btn btn-outline-light fw-semibold px-4">Feed</a>
         <a href="/friendships/pending" class="btn btn-outline-light fw-semibold px-4">
           Requests
@@ -76,7 +79,7 @@
             <%= session.friendships.accepted.accepted %>
           </span>
         </a>
-        <a href="/profiles/profile/add" class="btn btn-light text-primary fw-semibold px-4">Add Profile</a>
+        <a href="/profiles/profile" class="btn btn-light text-primary fw-semibold px-4">Profile</a>
         <a href="/authentication/logout" class="btn btn-light text-primary fw-semibold px-4">Logout</a>
       </div>
     </div>
