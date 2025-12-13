@@ -12,22 +12,32 @@
       --color-light-gray: #D9D9D9;
       --color-black: #070707;
       --color-gray: #696D7D;
-      --color-dark-blue: #1D3557;
       --bs-body-bg: var(--color-white);
       --bs-body-color: var(--color-black);
-      --bs-primary: var(--color-dark-blue);
-      --bs-primary-rgb: 29, 53, 87;
+      --bs-primary: var(--color-black);
+      --bs-primary-rgb: 0, 0, 0;
       --bs-secondary: var(--color-gray);
       --bs-secondary-rgb: 105, 109, 125;
       --bs-light: var(--color-light-gray);
       --bs-light-rgb: 217, 217, 217;
       --bs-body-font-family: 'Montserrat', sans-serif;
       --bs-heading-font-family: 'DM Serif Display', serif;
-      --bs-gradient: linear-gradient(135deg, var(--color-dark-blue), var(--color-gray));
+      --bs-gradient: linear-gradient(135deg, var(--color-black), var(--color-gray));
     }
+
+    .greentext {
+      color: #029107 !important;
+    }
+
+    .form-label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
   </style>
 </head>
-<body class="min-vh-100 d-flex align-items-center bg-primary bg-gradient">
+<body class="min-vh-100 d-flex align-items-center bg-primary">
   <!-- Back Link -->
   <a href="/" aria-label="Back" class="position-fixed top-0 start-0 m-3 z-3 btn btn-light text-primary rounded-pill shadow border-0 d-inline-flex align-items-center gap-2 px-3 py-2">
     <span class="fw-bold">←</span>
@@ -44,7 +54,8 @@
         <!-- Onboarding Form -->
         <div class="card shadow rounded-4 border-0 bg-white">
           <div class="card-body p-4 p-md-5">
-            <h1 class="h3 mb-4 text-center text-primary">Tell Us About You</h1>
+            <h1 class="h3 mb-3 text-center text-primary fw-bold">Tell Us About You</h1>
+            <p class="text-center text-secondary mb-4">Finish onboarding so your friends can find you.</p>
             <form action="/persons/onboarding" method="post" class="needs-validation" novalidate>
               <div class="row g-3">
                 <div class="col-md-6">
@@ -70,6 +81,7 @@
                   <select id="gender" name="gender" class="form-select">
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
 

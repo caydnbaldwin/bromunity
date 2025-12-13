@@ -32,49 +32,19 @@
 
   .hero-section {
     position: relative;
-    overflow: hidden; /* CRITICAL: This chops off the zoomed edges */
+    overflow: hidden;
   }
 
-  .video-background {
+  .gif-background {
     position: absolute;
     top: 50%;
     left: 50%;
-    
-    /* Updated Transform:
-       1. Center the video (-50%, -50%)
-       2. Zoom in (scale 1.3) to push the Title Bar and YouTube Logo off-screen
-    */
-    transform: translate(-50%, -50%) scale(1.7);
-    
-    /* Dimensions to force 16:9 and cover screen */
+    transform: translate(-50%, -50%);
     min-width: 100%;
     min-height: 100%;
-    width: 177.77vh; 
-    height: 56.25vw; 
-    
     z-index: 0;
-    
-    /* Pointer events none is CRITICAL. 
-       If a user hovers over the video, YouTube brings the title back. 
-       This disables hover interaction so the title stays hidden.
-    */
-    pointer-events: none; 
-    
-    opacity: 1; /* Adjust this to make text more readable */
-  }
-
-  /* Responsive Fallback to keep Aspect Ratio */
-  @media (min-aspect-ratio: 16/9) {
-    .video-background {
-      width: 100%;
-      height: auto;
-    }
-  }
-  @media (max-aspect-ratio: 16/9) {
-    .video-background {
-      width: auto;
-      height: 100%;
-    }
+    object-fit: cover;
+    pointer-events: none;
   }
 
   .hero-content {
@@ -95,14 +65,10 @@
 
   <section class="hero-section flex-grow-1 d-flex align-items-center bg-primary bg-gradient text-white">
     
-    <iframe 
-      class="video-background" 
-      src="https://www.youtube.com/embed/rpWrtXyEAN0?autoplay=1&mute=1&controls=0&loop=1&playlist=rpWrtXyEAN0&playsinline=1&showinfo=0&rel=0" 
-      title="YouTube video player" 
-      frameborder="0" 
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-      allowfullscreen>
-    </iframe>
+    <img 
+      class="gif-background" 
+      src="/img/matrix.gif" 
+      alt="Bromunity Matrix Background">
 
     <div class="container hero-content text-center py-5">
       <h2 class="display-4 fw-bold mb-3">Welcome to Bromunity</h2>
