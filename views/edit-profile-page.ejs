@@ -1,4 +1,14 @@
 <!DOCTYPE html>
+<!--
+  This view renders a form that lets a user edit
+  an existing game profile (platform, hours, description) for a person.
+
+  Expected variables provided by the controller:
+  - `session` : holds session info including `authentication`, `games`, and `friendships` data
+  - `params`  : route parameters, expects `person_id` and `game_id`
+  - `profile` : the existing profile record to pre-fill form fields (may be null)
+  - `errorMessage` : optional error message string to display
+-->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -29,7 +39,11 @@
   <% /* profile provided by controller as a single record; fallback removed to avoid wrong selection */ %>
 </head>
 <body class="d-flex flex-column min-vh-100 bg-body text-body">
-  <!-- Navigation -->
+  
+  <!-- Navigation bar: shows brand, links to sections, and quick counts
+    - Links shown may vary by the signed-in user's role
+    - Badges show counts for requests/friends using `session.friendships`
+  -->
   <nav class="navbar bg-primary navbar-dark shadow py-4">
     <div class="container d-flex align-items-center">
       <a href="/" class="navbar-brand d-flex align-items-center gap-2 text-decoration-none text-white">
@@ -41,10 +55,12 @@
           <a href="/persons/personsusers" class="btn btn-outline-light fw-semibold px-4">Persons</a>
         <% } %>
         <a href="/profiles/feed" class="btn btn-outline-light fw-semibold px-4">Feed</a>
+        <!-- Requests button with simple badge showing pending/request counts -->
         <a href="/friendships/pending" class="btn btn-outline-light fw-semibold px-4">
           Requests
           <span class="badge bg-light text-primary ms-2"><%= (session.friendships && session.friendships.sent && session.friendships.received) ? (session.friendships.sent.length + session.friendships.received.length) : (session.friendships && session.friendships.pending ? session.friendships.pending.pending : 0) %></span>
         </a>
+        <!-- Friends button: shows count of accepted friendships if available -->
         <a href="/friendships/accepted" class="btn btn-outline-light fw-semibold px-4">
           Friends
           <span class="badge bg-light text-primary ms-2"><%= (session.friendships && session.friendships.accepted && typeof session.friendships.accepted.accepted !== 'undefined') ? session.friendships.accepted.accepted : 0 %></span>
@@ -58,6 +74,7 @@
   <!-- Main Content -->
   <main class="flex-grow-1 py-5" style="background-color: var(--color-black);">
     <div class="container">
+      <!-- If controller passed an error message, show it here -->
       <% if (errorMessage !== null && errorMessage !== "") { %>
         <div class="alert alert-danger" role="alert"><%= errorMessage %></div>
       <% } %>
@@ -66,11 +83,13 @@
         <div class="col-12 col-md-10 col-lg-7">
           <div class="card shadow-sm border-0">
             <div class="card-body p-4 p-md-5">
+              <!-- Header for the form and a back link to the person's profile -->
               <div class="d-flex justify-content-between align-items-center mb-3">
                 <h1 class="display-5 fw-bold mb-0 text-primary">Edit Game Profile</h1>
                 <a href="/profiles/profile/<%= params.person_id %>" class="btn btn-outline-secondary fw-semibold">Back to Profile</a>
               </div>
 
+              <!-- Form submits POST to update the profile for the given person & game -->
               <form action="/profiles/profile/edit/<%= params.person_id %>/<%= params.game_id %>" method="post" class="needs-validation" novalidate>
                 <div class="row g-3">
                   <div class="col-12">
@@ -84,6 +103,7 @@
 
                   <div class="col-md-6">
                     <label for="gaming_platform" class="form-label">Gaming Platform</label>
+                    <!-- Platform choices; pre-select the user's current platform from `profile` -->
                     <select name="gaming_platform" id="gaming_platform" class="form-select" required>
                       <option value="PC" <%= profile && profile.gaming_platform === 'PC' ? 'selected' : '' %>>PC</option>
                       <option value="PlayStation" <%= profile && profile.gaming_platform === 'PlayStation' ? 'selected' : '' %>>PlayStation</option>
@@ -95,15 +115,18 @@
 
                   <div class="col-md-6">
                     <label for="hours_of_gameplay" class="form-label">Hours of Gameplay</label>
+                    <!-- Numeric input; pre-filled from `profile.hours_of_gameplay` when present -->
                     <input type="number" id="hours_of_gameplay" name="hours_of_gameplay" class="form-control" value="<%= profile ? profile.hours_of_gameplay : '' %>" required>
                   </div>
 
                   <div class="col-12">
                     <label for="description" class="form-label">Description</label>
+                    <!-- Short text description about the user's play style or notes -->
                     <input type="text" id="description" name="description" class="form-control" value="<%= profile ? profile.description : '' %>" required>
                   </div>
                 </div>
 
+                <!-- Submit button saves changes to the profile -->
                 <button type="submit" class="btn btn-primary bg-primary border-0 text-white fw-semibold w-100 mt-4">Save Changes</button>
               </form>
             </div>
@@ -114,6 +137,7 @@
   </main>
 
   <!-- Footer -->
+  <!-- Footer contains branding and a small playful copyright line -->
   <footer class="bg-primary text-light py-3">
     <div class="container text-center small">
       <p class="mb-0 d-flex justify-content-center align-items-center gap-2 flex-wrap">

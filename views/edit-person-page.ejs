@@ -1,18 +1,33 @@
+<!--
+This page allows an admin or authorized user to edit an existing person's
+information in the Bromunity system. The form is pre-filled with the
+person's current data and submits updates to the server.-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+  <!--Basic metadata and responsive layout-->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!--Bootstrap CSS for layout and styling-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+
+  <!--Google Fonts used across the site-->
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
   <title>Edit Person</title>
+
+  <!--Custom CSS variables and form styling-->
   <style>
     :root {
+      /* Color palette */
       --color-white: #FFFFFF;
       --color-light-gray: #D9D9D9;
       --color-black: #070707;
       --color-gray: #696D7D;
       --color-dark-blue: #1D3557;
+
+      /* Bootstrap theme overrides */
       --bs-body-bg: var(--color-white);
       --bs-body-color: var(--color-black);
       --bs-primary: var(--color-black);
@@ -21,15 +36,21 @@
       --bs-secondary-rgb: 105, 109, 125;
       --bs-light: var(--color-light-gray);
       --bs-light-rgb: 217, 217, 217;
+
+      /* Font settings */
       --bs-body-font-family: 'Montserrat', sans-serif;
       --bs-heading-font-family: 'DM Serif Display', serif;
+
+      /* Optional gradient */
       --bs-gradient: linear-gradient(135deg, var(--color-dark-blue), var(--color-gray));
     }
 
+    /* Remove default card border */
     .form-card {
       border: none;
     }
 
+    /* Style form labels for consistency */
     .form-label {
       font-size: 0.8rem;
       text-transform: uppercase;
@@ -37,11 +58,13 @@
       color: var(--color-gray);
     }
 
+    /* Rounded form inputs */
     .form-control,
     .form-select {
       border-radius: 0.75rem;
     }
 
+    /* Section headers inside the form */
     .section-title {
       font-size: 1.1rem;
       font-weight: 600;
@@ -49,26 +72,39 @@
     }
   </style>
 </head>
+
 <body class="d-flex flex-column min-vh-100 bg-body text-body">
+
+  <!--Calculate pending and accepted friend counts from the session-->
   <% const pendingCount = session.friendships && session.friendships.pending ? session.friendships.pending.pending : 0; %>
   <% const acceptedCount = session.friendships && session.friendships.accepted ? session.friendships.accepted.accepted : 0; %>
 
-  <!-- Navigation -->
+  <!-- Navigation Bar -->
   <nav class="navbar bg-primary navbar-dark shadow py-4">
     <div class="container d-flex align-items-center">
+
+      <!--Logo and site name-->
       <a href="/" class="navbar-brand d-flex align-items-center gap-2 text-decoration-none text-white">
         <img src="/logo.png" alt="Bromunity Logo" height="35">
         <span class="fs-3 fw-bold">Bromunity</span>
       </a>
+
+      <!--Navigation links-->
       <div class="ms-auto d-flex align-items-center gap-3 flex-wrap justify-content-end">
+
+        <!--Only show Persons link if the user is an admin-->
         <% if (session.authentication.role === "admin") { %>
           <a href="/persons/persons" class="btn btn-outline-light fw-semibold px-4">Persons</a>
         <% } %>
         <a href="/profiles/feed" class="btn btn-outline-light fw-semibold px-4">Feed</a>
+
+        <!--Pending friend requests-->
         <a href="/friendships/pending" class="btn btn-outline-light fw-semibold px-4">
           Requests
           <span class="badge bg-light text-primary ms-2"><%= pendingCount %></span>
         </a>
+
+        <!--Accepted friends-->
         <a href="/friendships/accepted" class="btn btn-outline-light fw-semibold px-4">
           Friends
           <span class="badge bg-light text-primary ms-2"><%= acceptedCount %></span>
@@ -79,41 +115,61 @@
     </div>
   </nav>
 
-  <!-- Edit Person Content -->
+  <!-- Edit Person Main Content -->
   <main class="flex-grow-1 py-5 bg-light">
     <div class="container">
+
+      <!--Back link-->
       <div class="mb-4">
         <a href="/persons/persons" class="btn btn-link text-decoration-none text-secondary fw-semibold px-0">&larr; Back to Persons</a>
       </div>
+
+      <!--Page title-->
       <div class="text-center mb-4">
         <h1 class="display-5 fw-bold text-primary">Edit Person</h1>
         <p class="text-secondary mb-0">Update a member's information to keep Bromunity accurate.</p>
       </div>
 
+      <!--Display error message if one exists-->
       <% if (errorMessage) { %>
         <div class="alert alert-danger" role="alert"><%= errorMessage %></div>
       <% } %>
 
+      <!--Only show the form if person data exists-->
       <% if (person) { %>
         <div class="card form-card shadow-sm">
           <div class="card-body">
+
+            <!--Form submits updated person data-->
             <form action="/persons/editPerson/<%= person.person_id %>" method="post" class="row g-4">
+
+              <!--Hidden authentication ID-->
               <input type="hidden" name="authentication_id" value="<%= person.authentication_id %>">
+
+              <!--Personal details section-->
               <div class="col-12">
                 <span class="section-title">Personal Details</span>
               </div>
+
+              <!--First name-->
               <div class="col-12 col-md-6">
                 <label for="first_name" class="form-label">First Name</label>
                 <input type="text" class="form-control" id="first_name" name="first_name" value="<%= person.first_name || '' %>" required>
               </div>
+
+              <!--Last name-->
               <div class="col-12 col-md-6">
                 <label for="last_name" class="form-label">Last Name</label>
                 <input type="text" class="form-control" id="last_name" name="last_name" value="<%= person.last_name || '' %>" required>
               </div>
+
+              <!-- Email address-->
               <div class="col-12 col-md-6">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" name="email" value="<%= person.email || '' %>" required>
               </div>
+
+              <!--User role-->
               <div class="col-12 col-md-6">
                 <label for="role" class="form-label">Role</label>
                 <select id="role" name="role" class="form-select">
@@ -121,14 +177,20 @@
                   <option value="admin" <%= person.role === 'admin' ? 'selected' : '' %>>Admin</option>
                 </select>
               </div>
+
+              <!--Phone number-->
               <div class="col-12 col-md-6">
                 <label for="phone_number" class="form-label">Phone Number</label>
                 <input type="text" class="form-control" id="phone_number" name="phone_number" value="<%= person.phone_number || '' %>">
               </div>
+
+              <!--Date of birth-->
               <div class="col-12 col-md-6">
                 <label for="date_of_birth" class="form-label">Date of Birth</label>
                 <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" value="<%= person.date_of_birth ? new Date(person.date_of_birth).toISOString().slice(0,10) : '' %>">
               </div>
+
+              <!--Gender selection-->
               <div class="col-12 col-md-6">
                 <label for="gender" class="form-label">Gender</label>
                 <select id="gender" name="gender" class="form-select">
@@ -138,26 +200,37 @@
                   <option value="Other" <%= person.gender === 'Other' ? 'selected' : '' %>>Other</option>
                 </select>
               </div>
+
+              <!--Address section-->
               <div class="col-12">
                 <span class="section-title">Address</span>
               </div>
+
+              <!--Street address-->
               <div class="col-12">
                 <label for="street_address" class="form-label">Street Address</label>
                 <input type="text" class="form-control" id="street_address" name="street_address" value="<%= person.street_address || '' %>">
               </div>
+
+              <!--City-->
               <div class="col-12 col-md-4">
                 <label for="city" class="form-label">City</label>
                 <input type="text" class="form-control" id="city" name="city" value="<%= person.city || '' %>">
               </div>
+
+              <!--State-->
               <div class="col-12 col-md-4">
                 <label for="state" class="form-label">State</label>
                 <input type="text" class="form-control" id="state" name="state" value="<%= person.state || '' %>">
               </div>
+
+              <!--Postal code-->
               <div class="col-12 col-md-4">
                 <label for="postal_code" class="form-label">Postal Code</label>
                 <input type="text" class="form-control" id="postal_code" name="postal_code" value="<%= person.postal_code || '' %>">
               </div>
 
+              <!--Form action buttons-->
               <div class="col-12 d-flex flex-wrap gap-3 mt-3">
                 <button type="submit" class="btn btn-primary bg-primary border-0 text-white fw-semibold px-4">Save Changes</button>
                 <a href="/persons/persons" class="btn btn-outline-secondary fw-semibold px-4">Cancel</a>
@@ -165,6 +238,8 @@
             </form>
           </div>
         </div>
+
+      <!--Message shown if person data is missing-->
       <% } else { %>
         <div class="text-center py-5">
           <p class="lead text-secondary mb-4">Person details could not be loaded.</p>
@@ -185,6 +260,7 @@
     </div>
   </footer>
 
+  <!--Bootstap JavaScript bundle-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 </html>
