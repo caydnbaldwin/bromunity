@@ -41,8 +41,8 @@ class ProfilesService {
   async postAddProfile(session, formData) {
     try {
       const person_id = session.person.person_id;
-      const {game_id, gaming_platform, description, hours_of_gameplay} = formData;
-      const profile = await profilesDao.postAddProfile(person_id, game_id, gaming_platform, description, hours_of_gameplay);
+      const {game_id, gaming_platform, description, hours_of_gameplay, gamertag} = formData;
+      const profile = await profilesDao.postAddProfile(person_id, game_id, gaming_platform, description, hours_of_gameplay, gamertag);
       if (profile) {
         return profile[0];
       } else {
@@ -56,8 +56,8 @@ class ProfilesService {
   async postEditProfile(session, formData) {
     try {
       const person_id = session.person.person_id;
-      const {game_id, gaming_platform, description, hours_of_gameplay} = formData;
-      const profile = await profilesDao.postEditProfile(person_id, game_id, gaming_platform, description, hours_of_gameplay);
+      const {game_id, gaming_platform, description, hours_of_gameplay, gamertag} = formData;
+      const profile = await profilesDao.postEditProfile(person_id, game_id, gaming_platform, description, hours_of_gameplay, gamertag);
       if (profile) {
         return profile[0];
       } else {

@@ -124,6 +124,11 @@
                     <!-- Short text description about the user's play style or notes -->
                     <input type="text" id="description" name="description" class="form-control" value="<%= profile ? profile.description : '' %>" required>
                   </div>
+
+                  <div class="col-12">
+                    <label for="gamertag" class="form-label">Gamertag</label>
+                    <input type="text" id="gamertag" name="gamertag" class="form-control" value="<%= profile ? profile.gamertag : '' %>" required>
+                  </div>
                 </div>
 
                 <!-- Submit button saves changes to the profile -->

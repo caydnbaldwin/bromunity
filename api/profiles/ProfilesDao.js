@@ -131,7 +131,7 @@ class ProfilesDao {
     };
   };
 
-  async postAddProfile(person_id, game_id, gaming_platform, description, hours_of_gameplay) {
+  async postAddProfile(person_id, game_id, gaming_platform, description, hours_of_gameplay, gamertag) {
     try {
       return await knex('profiles')
         .insert({
@@ -139,7 +139,8 @@ class ProfilesDao {
           game_id,
           gaming_platform,
           description,
-          hours_of_gameplay
+          hours_of_gameplay,
+          gamertag
         })
         .returning('*');
     } catch (err) {
@@ -149,7 +150,7 @@ class ProfilesDao {
     };
   };
 
-  async postEditProfile(person_id, game_id, gaming_platform, description, hours_of_gameplay) {
+  async postEditProfile(person_id, game_id, gaming_platform, description, hours_of_gameplay, gamertag) {
     try {
       return await knex('profiles')
         .where('person_id', person_id)
@@ -157,7 +158,8 @@ class ProfilesDao {
         .update({
           gaming_platform,
           description,
-          hours_of_gameplay
+          hours_of_gameplay,
+          gamertag
         })
         .returning('*');
     } catch (err) {
