@@ -68,6 +68,15 @@ class ProfilesService {
     };
   };
 
+  async getProfileForEdit(person_id, game_id) {
+    try {
+      const profile = await profilesDao.getProfileByIds(person_id, game_id);
+      return profile;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   async deleteProfile(urlParameters) {
     try {
       const {person_id, game_id} = urlParameters;

@@ -56,11 +56,13 @@ class ProfilesController {
     try {
       const games = await profilesService.getAddProfilePage();
       const friendships = await friendshipsService.getPendingPage(req.session);
+      const { person_id, game_id } = req.params;
+      const profile = await profilesService.getProfileForEdit(parseInt(person_id, 10), parseInt(game_id, 10));
       req.session.games = games;
       req.session.friendships = friendships;
-      res.render('edit-profile-page', {errorMessage: null, session: req.session, params: req.params});
+      res.render('edit-profile-page', {errorMessage: null, session: req.session, params: req.params, profile});
     } catch (error) {
-      res.render('edit-profile-page', {errorMessage: error, session: req.session, params: req.params});
+      res.render('edit-profile-page', {errorMessage: error, session: req.session, params: req.params, profile: null});
     };
   };
 

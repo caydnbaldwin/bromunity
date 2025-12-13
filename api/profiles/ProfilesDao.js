@@ -180,6 +180,22 @@ class ProfilesDao {
       error.cause = err ? err : 'Error';
     };
   };
+
+  async getProfileByIds(person_id, game_id) {
+    try {
+      return await knex('profiles')
+        .select('*')
+        .leftJoin('games', 'profiles.game_id', 'games.game_id')
+        .where('profiles.person_id', person_id)
+        .andWhere('profiles.game_id', game_id)
+        .first();
+    } catch (err) {
+      const error = new Error('Failed to fetch profile.');
+      error.status = 403;
+      error.cause = err ? err : 'Error';
+      throw error;
+    }
+  }
 };
 
 module.exports = new ProfilesDao();
