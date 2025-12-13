@@ -130,7 +130,39 @@
                 <div class="mt-2">
                   <!-- Display attribute label/value rows, skipping IDs and title -->
                   <% Object.keys(profile).forEach(function(attribute) { %>
-                    <% if (attribute !== 'person_id' && attribute !== 'game_id' && attribute !== 'game_title') { %>
+                    <%
+                      // Determine whether to display the current attribute.
+                      // Hide 'gamertag' when viewing someone else's profile and friendship status between viewer and viewed is not Accepted.
+                      const viewerId = session && session.person ? session.person.person_id : null;
+                      const viewedId = (typeof viewedPerson !== 'undefined' && viewedPerson && viewedPerson.person_id) ? viewedPerson.person_id : (profile && profile.person_id ? profile.person_id : null);
+
+                      // Helper to check Accepted friendship for given pair in an array of friendships
+                      function isAcceptedInList(list) {
+                        try {
+                          return Array.isArray(list) && list.some(f => (
+                            f && f.status === 'Accepted' && (
+                              (f.person_id_1 === viewerId && f.person_id_2 === viewedId) ||
+                              (f.person_id_2 === viewerId && f.person_id_1 === viewedId)
+                            )
+                          ));
+                        } catch (_) {
+                          return false;
+                        }
+                      }
+
+                      // Check multiple possible session locations for accepted friendships
+                      const acceptedFromSessionAccepted = isAcceptedInList(session && session.accepted ? session.accepted : null);
+                      const acceptedFromFriendshipsAccepted = isAcceptedInList(session && session.friendships && Array.isArray(session.friendships.accepted) ? session.friendships.accepted : null);
+                      const acceptedFromFriendshipsReceived = isAcceptedInList(session && session.friendships && Array.isArray(session.friendships.received) ? session.friendships.received : null);
+                      const acceptedFromFriendshipsSent = isAcceptedInList(session && session.friendships && Array.isArray(session.friendships.sent) ? session.friendships.sent : null);
+
+                      const isAcceptedFriendship = !!(acceptedFromSessionAccepted || acceptedFromFriendshipsAccepted || acceptedFromFriendshipsReceived || acceptedFromFriendshipsSent);
+
+                      const canViewSensitive = !!isOwnProfile || isAcceptedFriendship;
+                      const isSensitiveAttribute = attribute === 'gamertag';
+                      const shouldShowAttribute = attribute !== 'person_id' && attribute !== 'game_id' && attribute !== 'game_title' && (!isSensitiveAttribute || canViewSensitive);
+                    %>
+                    <% if (shouldShowAttribute) { %>
                       <div class="profile-attribute-row border-bottom py-1">
                         <!-- Attribute label (underscores replaced with spaces) -->
                         <span class="fw-semibold text-dark text-uppercase small flex-grow-1"><%= attribute.replace(/_/g, ' ') %></span>
