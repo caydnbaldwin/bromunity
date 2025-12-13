@@ -1,3 +1,7 @@
+<!-- Caydn Baldwin, Brady Bates, Jacob Woodward, Peter Young -->
+<!-- Description: This page displays users. Admin are able to search, edit, and delete users.  -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <title>Edit Persons</title>
     <style>
+        /* Theme variables and Bootstrap overrides */
         :root {
             --color-white: #FFFFFF;
             --color-light-gray: #D9D9D9;
@@ -26,6 +31,7 @@
             --bs-gradient: linear-gradient(135deg, var(--color-dark-blue), var(--color-gray));
         }
 
+        /* Responsive card grid for persons list */
         .persons-grid {
             display: grid;
             gap: 1.5rem;
@@ -33,19 +39,23 @@
             align-items: stretch;
         }
 
+        /* Card styling cleanup */
         .person-card {
             border: none;
         }
 
+        /* Subtle dividers within card list */
         .person-card .list-group-item {
             border: 0;
             border-top: 1px solid #f0f0f0;
         }
 
+        /* Remove top border on first item */
         .person-card .list-group-item:first-child {
             border-top: 0;
         }
 
+        /* Label styles for data rows */
         .person-card .label-text {
             font-size: 0.75rem;
             text-transform: uppercase;
@@ -53,19 +63,23 @@
             color: var(--color-gray);
         }
 
+        /* Value styles for data rows */
         .person-card .value-text {
             font-size: 0.95rem;
             color: var(--color-black);
             word-break: break-word;
         }
+        /* Search card base background */
         .search-card {
             background: var(--bs-body-bg);
         }
 
+        /* Rounded inputs for search form */
         .search-card .form-control {
             border-radius: 0.75rem;
         }
 
+        /* Rounded buttons for search form */
         .search-card .btn {
             border-radius: 0.75rem;
         }
@@ -83,16 +97,19 @@
                 <span class="fs-3 fw-bold">Bromunity</span>
             </a>
             <div class="ms-auto d-flex align-items-center gap-3 flex-wrap justify-content-end">
+                <!-- Admin-only link to manage persons -->
                 <% if (session.authentication.role === "admin") { %>
                     <a href="/persons/persons" class="btn btn-outline-light fw-semibold px-4">Persons</a>
                 <% } %>
                 <a href="/profiles/feed" class="btn btn-outline-light fw-semibold px-4">Feed</a>
                 <a href="/friendships/pending" class="btn btn-outline-light fw-semibold px-4">
                     Requests
+                    <!-- Pending friendship requests count -->
                     <span class="badge bg-light text-primary ms-2"><%= pendingCount %></span>
                 </a>
                 <a href="/friendships/accepted" class="btn btn-outline-light fw-semibold px-4">
                     Friends
+                    <!-- Accepted friendships count -->
                     <span class="badge bg-light text-primary ms-2"><%= acceptedCount %></span>
                 </a>
                 <a href="/profiles/profile" class="btn btn-light text-primary fw-semibold px-4">Profile</a>
@@ -105,10 +122,12 @@
     <main class="flex-grow-1 py-5" style="background-color: var(--color-black);">
         <div class="container">
             <div class="mb-4 text-center">
+                <!-- Page title and helper subtitle -->
                 <h1 class="display-5 fw-bold text-primary text-white">Edit Persons</h1>
                 <p class="text-secondary mb-0 text-white">Manage Bromunity members and keep their info up to date.</p>
             </div>
 
+            <!-- Search form for filtering persons by name -->
             <div class="card shadow-sm border-0 mb-4 search-card">
                 <div class="card-body">
                     <form class="row g-2 align-items-end" action="/persons/searchPerson" method="get">
@@ -123,30 +142,38 @@
                 </div>
             </div>
 
+            <!-- Error message banner when search or load fails -->
             <% if (errorMessage) { %>
                 <div class="alert alert-danger" role="alert"><%= errorMessage %></div>
             <% } %>
 
+            <!-- Persons list grid when results are available -->
             <% if (persons && persons.length > 0) { %>
                 <div class="persons-grid">
+                    <!-- Render each person card with core details and actions -->
                     <% persons.forEach(function(person) { %>
                         <div class="card person-card shadow-sm h-100">
                             <div class="card-body">
+                                <!-- Person name heading -->
                                 <h2 class="h4 text-primary mb-3"><%= person.first_name %> <%= person.last_name %></h2>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item px-0">
+                                        <!-- Email field -->
                                         <div class="label-text">Email</div>
                                         <div class="value-text"><%= person.email || 'N/A' %></div>
                                     </li>
                                     <li class="list-group-item px-0">
+                                        <!-- Role field (defaults to user) -->
                                         <div class="label-text">Role</div>
                                         <div class="value-text text-capitalize"><%= person.role || 'user' %></div>
                                     </li>
                                     <li class="list-group-item px-0">
+                                        <!-- Phone number field -->
                                         <div class="label-text">Phone</div>
                                         <div class="value-text"><%= person.phone_number || 'N/A' %></div>
                                     </li>
                                     <li class="list-group-item px-0">
+                                        <!-- Date of birth (localized if present) -->
                                         <div class="label-text">Date of Birth</div>
                                         <div class="value-text">
                                             <% if (person.date_of_birth) { %>
@@ -157,10 +184,12 @@
                                         </div>
                                     </li>
                                     <li class="list-group-item px-0">
+                                        <!-- Gender field -->
                                         <div class="label-text">Gender</div>
                                         <div class="value-text"><%= person.gender || 'N/A' %></div>
                                     </li>
                                     <li class="list-group-item px-0">
+                                        <!-- Address fields combined into two lines -->
                                         <div class="label-text">Address</div>
                                         <div class="value-text">
                                             <%= person.street_address || 'N/A' %><br>
@@ -168,6 +197,7 @@
                                         </div>
                                     </li>
                                 </ul>
+                                <!-- Admin actions for editing/deleting a person -->
                                 <div class="d-flex flex-wrap gap-2 mt-4">
                                     <a href="/persons/editPerson/<%= person.person_id %>" class="btn btn-primary bg-primary border-0 text-white fw-semibold">Edit Person</a>
                                     <a href="/persons/deletePerson/<%= person.person_id %>" class="btn btn-outline-danger fw-semibold">Delete Person</a>
@@ -176,6 +206,7 @@
                         </div>
                     <% }) %>
                 </div>
+            <!-- Empty state when there are no persons -->
             <% } else { %>
                 <div class="text-center py-5">
                     <p class="lead text-secondary mb-4">No persons found in the system.</p>

@@ -1,3 +1,7 @@
+<!-- Caydn Baldwin, Brady Bates, Jacob Woodward, Peter Young -->
+<!-- Description: This page is where users that already have accounts will log in. If the email and
+ password don't match an existing account, login fails. There is an option to sign up if they don't have an account.  -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
   <title>Login</title>
   <style>
+    /* Theme variables and Bootstrap overrides for login */
     :root {
       --color-white: #FFFFFF;
       --color-light-gray: #D9D9D9;
@@ -15,8 +20,6 @@
       --color-dark-blue: #1D3557;
       --bs-body-bg: var(--color-white);
       --bs-body-color: var(--color-black);
-      /* --bs-primary: var(--color-dark-blue);
-      --bs-primary-rgb: 29, 53, 87; */
       --bs-primary: var(--color-black);
       --bs-primary-rgb: 0, 0, 0;
       --bs-secondary: var(--color-gray);
@@ -28,6 +31,7 @@
       --bs-gradient: linear-gradient(135deg, var(--color-dark-blue), var(--color-gray));
     }
 
+    /* Accent text color for positive/CTA links */
     .greentext {
       color: #029107 !important;
     }
@@ -45,6 +49,7 @@
     <div class="row justify-content-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-5">
 
+        <!-- Error banner when login fails -->
         <% if (errorMessage !== null && errorMessage !== "") { %>
           <div class="alert alert-danger" role="alert"><%= errorMessage %></div>
         <% } %>
@@ -52,21 +57,27 @@
         <!-- Login Form -->
         <div class="card shadow rounded-4 border-0 bg-white">
           <div class="card-body p-4 p-md-5">
+            <!-- Form header welcoming the user back -->
             <h1 class="h3 mb-4 text-center text-primary">Welcome Back</h1>
+            <!-- Collect login credentials -->
             <form action="/authentication/login" method="post" class="needs-validation" novalidate>
               <div class="mb-3">
+                <!-- Email address input -->
                 <label for="email" class="form-label text-dark">Email</label>
                 <input type="email" id="email" name="email" class="form-control" placeholder="example@email.com" required autofocus>
               </div>
 
               <div class="mb-4">
+                <!-- Password input -->
                 <label for="password" class="form-label text-dark">Password</label>
                 <input type="password" id="password" name="password" class="form-control" required>
               </div>
 
+              <!-- Submit to log into Bromunity -->
               <button type="submit" class="btn btn-primary bg-primary border-0 text-white fw-semibold w-100">Login</button>
             </form>
 
+            <!-- Signup link for users without an account -->
             <div class="text-center mt-3">
               <small class="text-muted">Don't have an account?
                 <a href="/authentication/signup" class="link-secondary fw-semibold greentext">Signup</a>

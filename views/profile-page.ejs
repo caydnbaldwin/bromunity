@@ -1,3 +1,8 @@
+<!-- Caydn Baldwin, Brady Bates, Jacob Woodward, Peter Young -->
+<!-- Description: This page is to display all of a person's profiles. It is their main
+  landing page once they log in. Here they will view all their profiles, have the option to add profiles, and
+  navigate to any other pages. -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
   <title>Profile</title>
   <style>
+    /* Page theme variables and layout helpers */
     :root {
       --color-white: #FFFFFF;
       --color-light-gray: #D9D9D9;
@@ -15,8 +21,6 @@
       --color-dark-blue: #1D3557;
       --bs-body-bg: var(--color-white);
       --bs-body-color: var(--color-black);
-      /* --bs-primary: var(--color-dark-blue);
-      --bs-primary-rgb: 29, 53, 87; */
       --bs-primary: var(--color-black);
       --bs-primary-rgb: 0, 0, 0;
       --bs-secondary: var(--color-gray);
@@ -28,6 +32,7 @@
       --bs-gradient: linear-gradient(135deg, var(--color-dark-blue), var(--color-gray));
     }
 
+    /* Responsive grid to display profile cards */
     .profile-scroll {
       display: grid;
       gap: 1.5rem;
@@ -35,6 +40,7 @@
       align-items: stretch;
     }
 
+    /* Ensure cards fill their grid columns cleanly */
     .profile-scroll .profile-card {
       width: 100%;
       min-width: 0;
@@ -42,6 +48,7 @@
       overflow-wrap: anywhere;
     }
 
+    /* Row layout for attribute label/value pairs */
     .profile-attribute-row {
       display: flex;
       justify-content: space-between;
@@ -63,18 +70,22 @@
         <span class="fs-3 fw-bold">Bromunity</span>
       </a>
       <div class="ms-auto d-flex align-items-center gap-3 flex-wrap justify-content-end">
+        <!-- Only admins see the Persons link -->
         <% if (session.authentication.role === "admin") { %>
           <a href="/persons/persons" class="btn btn-outline-light fw-semibold px-4">Persons</a>
         <% } %>
         <a href="/profiles/feed" class="btn btn-outline-light fw-semibold px-4">Feed</a>
         <a href="/friendships/pending" class="btn btn-outline-light fw-semibold px-4">
           Requests
+          <!-- Count of pending friendship requests -->
           <span class="badge bg-light text-primary ms-2"><%= session.friendships.pending.pending %></span>
         </a>
         <a href="/friendships/accepted" class="btn btn-outline-light fw-semibold px-4">
           Friends
+          <!-- Count of accepted friends -->
           <span class="badge bg-light text-primary ms-2"><%= session.friendships.accepted.accepted %></span>
         </a>
+        <!-- Show Add Profile if viewing own profile; otherwise link to Profile overview -->
         <% if (isOwnProfile) { %>
           <a href="/profiles/profile/add" class="btn btn-light text-primary fw-semibold px-4">Add Profile</a>
         <% } else { %>
@@ -89,20 +100,27 @@
   <main class="flex-grow-1 py-5" style="background-color: var(--color-black);">
     <div class="container">
       <div class="mb-4 text-center">
+        <!-- Dynamic page title: shows person name if available -->
         <h1 class="display-5 fw-bold text-white"><%= isOwnProfile ? (viewedPerson ? viewedPerson.first_name + ' ' + viewedPerson.last_name : session.person.first_name + ' ' + (session.person.last_name || '')) : (viewedPerson ? viewedPerson.first_name + ' ' + viewedPerson.last_name : 'Profile') %></h1>
+        <!-- Subtitle varies for own vs viewing someone else -->
         <p class="text-light mb-0"><%= isOwnProfile ? 'Manage and update your Bromunity presence.' : 'Viewing user\'s gaming profiles.' %></p>
       </div>
 
+      <!-- Error banner if an error message is present -->
       <% if (errorMessage !== null && errorMessage !== "") { %>
         <div class="alert alert-danger" role="alert"><%= errorMessage %></div>
       <% } %>
 
+      <!-- Render profiles if any exist in session -->
       <% if (session.profiles !== null && session.profiles.length > 0) { %>
         <div class="profile-scroll">
+          <!-- Iterate over each profile and render a card -->
           <% session.profiles.forEach(function(profile) { %>
             <div class="card profile-card h-100 shadow-sm border-0">
               <div class="card-body d-flex flex-column gap-2">
+                <!-- Card title shows person's name and game title -->
                 <h2 class="h4 text-primary mb-0"><%= (viewedPerson ? viewedPerson.first_name : (isOwnProfile ? session.person.first_name : '')) %>'s <%= profile.game_title %> Profile</h2>
+                <!-- Edit/Delete controls only for your own profiles -->
                 <% if (isOwnProfile) { %>
                   <div class="d-flex flex-wrap gap-2">
                     <a href="/profiles/profile/edit/<%= profile.person_id %>/<%= profile.game_id %>" class="btn btn-primary bg-primary border-0 text-white btn-sm fw-semibold">Edit</a>
@@ -110,10 +128,13 @@
                   </div>
                 <% } %>
                 <div class="mt-2">
+                  <!-- Display attribute label/value rows, skipping IDs and title -->
                   <% Object.keys(profile).forEach(function(attribute) { %>
                     <% if (attribute !== 'person_id' && attribute !== 'game_id' && attribute !== 'game_title') { %>
                       <div class="profile-attribute-row border-bottom py-1">
+                        <!-- Attribute label (underscores replaced with spaces) -->
                         <span class="fw-semibold text-dark text-uppercase small flex-grow-1"><%= attribute.replace(/_/g, ' ') %></span>
+                        <!-- Attribute value with safe wrapping -->
                         <span class="text-dark text-break flex-grow-1 text-end"><%= profile[attribute] %></span>
                       </div>
                     <% } %>
@@ -123,9 +144,11 @@
             </div>
           <% }); %>
         </div>
+       <!-- Empty state when no profiles exist -->
       <% } else { %>
         <div class="text-center py-5">
           <p class="lead text-light mb-4"><%= isOwnProfile ? 'No profiles exist for your account yet.' : 'No profiles to display for this user.' %></p>
+           <!-- Encourage creating first profile when it's your own -->
           <% if (isOwnProfile) { %>
             <a href="/profiles/profile/add" class="btn btn-primary bg-primary border-0 text-white fw-semibold px-4">Create Your First Profile</a>
           <% } %>
