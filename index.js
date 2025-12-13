@@ -1,3 +1,8 @@
+// Caydn Baldwin, Brady Bates, Jacob Woodward, Peter Young
+// Description: Index.js page for Bromunity. A gaming app for bros that just want to find people to game with. 
+// Defines middleware and other routes for the app. 
+
+
 // import environment variables
 require('dotenv').config();
 

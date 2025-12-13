@@ -1,3 +1,8 @@
+<!-- Caydn Baldwin, Brady Bates, Jacob Woodward, Peter Young -->
+<!-- Description: This page is where users that have just signed up fill in the rest of their
+ user information such as address, phone number, gender, etc. This information is stored as part of their
+ person information.  -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
   <title>Onboarding</title>
   <style>
+    /* Theme variables and Bootstrap overrides for onboarding */
     :root {
       --color-white: #FFFFFF;
       --color-light-gray: #D9D9D9;
@@ -25,10 +31,12 @@
       --bs-gradient: linear-gradient(135deg, var(--color-black), var(--color-gray));
     }
 
+    /* Accent text color for success/positive messages */
     .greentext {
       color: #029107 !important;
     }
 
+    /* Labels styled for readability and consistency */
     .form-label {
       font-size: 0.85rem;
       text-transform: uppercase;
@@ -47,6 +55,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 col-lg-8 col-xl-7">
+        <!-- Error banner if onboarding submission fails -->
         <% if (errorMessage !== null && errorMessage !== "") { %>
           <div class="alert alert-danger" role="alert"><%= errorMessage %></div>
         <% } %>
@@ -54,29 +63,36 @@
         <!-- Onboarding Form -->
         <div class="card shadow rounded-4 border-0 bg-white">
           <div class="card-body p-4 p-md-5">
+            <!-- Form header and helper subtext -->
             <h1 class="h3 mb-3 text-center text-primary fw-bold">Tell Us About You</h1>
             <p class="text-center text-secondary mb-4">Finish onboarding so your friends can find you.</p>
+            <!-- Collect basic person information for profile creation -->
             <form action="/persons/onboarding" method="post" class="needs-validation" novalidate>
               <div class="row g-3">
                 <div class="col-md-6">
+                  <!-- First name input -->
                   <label for="first_name" class="form-label text-dark">First Name</label>
                   <input type="text" id="first_name" name="first_name" class="form-control" placeholder="John" required autofocus>
                 </div>
                 <div class="col-md-6">
+                  <!-- Last name input -->
                   <label for="last_name" class="form-label text-dark">Last Name</label>
                   <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Smith" required>
                 </div>
 
                 <div class="col-md-6">
+                  <!-- Date of birth input -->
                   <label for="date_of_birth" class="form-label text-dark">Date of Birth</label>
                   <input type="date" id="date_of_birth" name="date_of_birth" class="form-control" required>
                 </div>
                 <div class="col-md-6">
+                  <!-- Phone number input -->
                   <label for="phone_number" class="form-label text-dark">Phone Number</label>
                   <input type="number" id="phone_number" name="phone_number" class="form-control" placeholder="8012221234" required>
                 </div>
 
                 <div class="col-md-6">
+                  <!-- Gender selection -->
                   <label for="gender" class="form-label text-dark">Gender</label>
                   <select id="gender" name="gender" class="form-select">
                     <option value="Male">Male</option>
@@ -86,15 +102,18 @@
                 </div>
 
                 <div class="col-12">
+                  <!-- Street address input -->
                   <label for="street_address" class="form-label text-dark">Street Address</label>
                   <input type="text" id="street_address" name="street_address" class="form-control" required>
                 </div>
 
                 <div class="col-md-6">
+                  <!-- City input -->
                   <label for="city" class="form-label text-dark">City</label>
                   <input type="text" id="city" name="city" class="form-control" required>
                 </div>
                 <div class="col-md-3">
+                  <!-- State selection (US states) -->
                   <label for="state" class="form-label text-dark">State</label>
                   <select id="state" name="state" class="form-select">
                     <option value="AL">AL</option>
@@ -150,11 +169,13 @@
                   </select>
                 </div>
                 <div class="col-md-3">
+                  <!-- Postal code input -->
                   <label for="postal_code" class="form-label text-dark">Postal Code</label>
                   <input type="number" id="postal_code" name="postal_code" class="form-control" required>
                 </div>
               </div>
 
+              <!-- Submit to complete onboarding -->
               <button type="submit" class="btn btn-primary bg-primary border-0 text-white fw-semibold w-100 mt-4">Onboard</button>
             </form>
           </div>

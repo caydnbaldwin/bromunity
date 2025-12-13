@@ -1,12 +1,18 @@
+<!-- Caydn Baldwin, Brady Bates, Jacob Woodward, Peter Young
+Description of page: This page is where the user is directed to in order to sign up 
+for an account. It looks like the login page but creates an account for the user. -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Importing bootstrap styles -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
   <title>Signup</title>
   <style>
+    /* Color scheme */
     :root {
       --color-white: #FFFFFF;
       --color-light-gray: #D9D9D9;
@@ -15,8 +21,6 @@
       --color-dark-blue: #1D3557;
       --bs-body-bg: var(--color-white);
       --bs-body-color: var(--color-black);
-      /* --bs-primary: var(--color-dark-blue);
-      --bs-primary-rgb: 29, 53, 87; */
       --bs-primary: var(--color-black);
       --bs-primary-rgb: 0, 0, 0;
       --bs-secondary: var(--color-gray);
@@ -34,23 +38,25 @@
   </style>
 </head>
 <body class="min-vh-100 d-flex align-items-center bg-primary">
-<!-- <body class="min-vh-100 d-flex align-items-center bg-primary bg-gradient"></body> -->
   <!-- Back Link -->
   <a href="/" aria-label="Back" class="position-fixed top-0 start-0 m-3 z-3 btn btn-light text-primary rounded-pill shadow border-0 d-inline-flex align-items-center gap-2 px-3 py-2">
     <span class="fw-bold">←</span>
     <span class="fw-semibold">Back</span>
   </a>
+  <!-- Container for the signup form content -->
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-5">
+        <!-- Where the error message will be displayed if it exists -->
         <% if (errorMessage !== null && errorMessage !== "") { %>
           <div class="alert alert-danger" role="alert"><%= errorMessage %></div>
         <% } %>
 
-        <!-- Signup Form -->
+        <!-- Signup Form Container-->
         <div class="card shadow rounded-4 border-0 bg-white">
           <div class="card-body p-4 p-md-5">
             <h1 class="h3 mb-4 text-center text-primary">Create Your Account</h1>
+            <!-- Actual form. Route takes you to /authentication/signup -->
             <form action="/authentication/signup" method="post" class="needs-validation" novalidate>
               <div class="mb-3">
                 <label for="email" class="form-label text-dark">Email</label>
@@ -61,10 +67,10 @@
                 <label for="password" class="form-label text-dark">Password</label>
                 <input type="password" id="password" name="password" class="form-control" required>
               </div>
-
+              <!-- Button to sign up -->
               <button type="submit" class="btn btn-primary bg-primary border-0 text-white fw-semibold w-100">Sign Up</button>
             </form>
-
+            <!-- The user can click to log in if they went to the signup page when they already have an account -->
             <div class="text-center mt-3">
               <small class="text-muted">Already have an account?
                 <a href="/authentication/login" class="link-secondary fw-semibold greentext">Login</a>

@@ -1,3 +1,8 @@
+<!-- Caydn Baldwin, Brady Bates, Jacob Woodward, Peter Young -->
+<!-- Description: This page is used to display pending friend requests. The user has an
+ option to see the profiles of their pending requests and choose to accept or reject the request.  -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,6 +16,7 @@
     rel="stylesheet">
   <title>Pending Requests</title>
   <style>
+    /* Theme variables and Bootstrap overrides */
     :root {
       --color-white: #FFFFFF;
       --color-light-gray: #D9D9D9;
@@ -30,15 +36,18 @@
       --bs-gradient: linear-gradient(135deg, var(--color-dark-blue), var(--color-gray));
     }
 
+    /* Elevation and hover transform for request cards */
     .request-card {
       transition: transform 0.2s, box-shadow 0.2s;
     }
 
+    /* Slight lift and shadow on hover */
     .request-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
     }
 
+    /* Section header with divider line */
     .section-title {
       display: flex;
       align-items: center;
@@ -48,6 +57,7 @@
       border-bottom: 2px solid var(--color-light-gray);
     }
 
+    /* Reset heading spacing within section title */
     .section-title h2 {
       margin: 0;
     }
@@ -63,18 +73,21 @@
         <span class="fs-3 fw-bold">Bromunity</span>
       </a>
       <div class="ms-auto d-flex align-items-center gap-3 flex-wrap justify-content-end">
+        <!-- Admin-only link to manage persons -->
         <% if (session.authentication.role === "admin") { %>
           <a href="/persons/persons" class="btn btn-outline-light fw-semibold px-4">Persons</a>
         <% } %>
         <a href="/profiles/feed" class="btn btn-outline-light fw-semibold px-4">Feed</a>
         <a href="/friendships/pending" class="btn btn-outline-light fw-semibold px-4">
           Requests
+          <!-- Total pending requests (received + sent) -->
           <span class="badge bg-light text-primary ms-2">
             <%= session.friendships.received.length + session.friendships.sent.length %>
           </span>
         </a>
         <a href="/friendships/accepted" class="btn btn-outline-light fw-semibold px-4">
           Friends
+          <!-- Accepted friendship count -->
           <span class="badge bg-light text-primary ms-2">
             <%= session.friendships.accepted.accepted %>
           </span>
@@ -89,10 +102,12 @@
   <main class="flex-grow-1 py-5" style="background-color: var(--color-black);">
     <div class="container">
       <div class="mb-5 text-center">
+        <!-- Page title and helper subtitle -->
         <h1 class="display-5 fw-bold text-white">Friend Requests</h1>
         <p class="text-light mb-0">Manage your pending friend requests.</p>
       </div>
 
+      <!-- Error banner when an error message is present -->
       <% if (errorMessage !==null && errorMessage !=="" ) { %>
         <div class="alert alert-danger" role="alert">
           <%= errorMessage %>
@@ -103,6 +118,7 @@
           <div class="mb-5">
             <div class="section-title">
               <h2 class="h3 text-white">Requests Received</h2>
+              <!-- Count of received friend requests -->
               <span class="badge bg-primary text-white">
                 <%= session.friendships.received.length %>
               </span>
@@ -111,6 +127,7 @@
             <% if (session.friendships.received && session.friendships.received.length> 0) { %>
               <div class="row g-4">
                 <% session.friendships.received.forEach(function(request) { %>
+                  <!-- Compute sender name and age for display -->
                   <% let senderName='' ; let senderDob='' ; if (request.sender_id===request.person_id_1) {
                     senderName=request.person_id_1_first_name; senderDob=request.person_id_1_date_of_birth; } else {
                     senderName=request.person_id_2_first_name; senderDob=request.person_id_2_date_of_birth; } let age=''
@@ -121,15 +138,18 @@
                       <div class="card request-card h-100 shadow-sm border-0">
                         <div class="card-body d-flex flex-column gap-3">
                           <div>
+                          <!-- Sender name heading -->
                             <h5 class="card-title text-primary mb-1">
                               <%= senderName %>
                             </h5>
+                          <!-- Optional age line if available -->
                             <p class="card-text text-secondary small mb-2">
                               <% if (age) { %>Age: <%= age %>
                                   <% } %>
                             </p>
                             <p class="card-text text-secondary small mb-0">Wants to be your friend</p>
                           </div>
+                         <!-- Actions: accept, decline, and view sender profile -->
                           <div class="d-flex gap-2">
                             <a href="/friendships/accept/<%= request.sender_id %>"
                               class="btn btn-primary bg-primary border-0 text-white btn-sm fw-semibold flex-grow-1">Accept</a>
@@ -146,6 +166,7 @@
                     <% }); %>
               </div>
               <% } else { %>
+                <!-- Empty state when there are no received requests -->
                 <div class="text-center py-5">
                   <p class="lead text-light">No pending requests received.</p>
                 </div>
@@ -156,6 +177,7 @@
           <div class="mb-5">
             <div class="section-title">
               <h2 class="h3 text-white">Requests Sent</h2>
+              <!-- Count of sent friend requests -->
               <span class="badge bg-primary text-white">
                 <%= session.friendships.sent.length %>
               </span>
@@ -164,6 +186,7 @@
             <% if (session.friendships.sent && session.friendships.sent.length> 0) { %>
               <div class="row g-4">
                 <% session.friendships.sent.forEach(function(request) { %>
+                  <!-- Compute recipient name and age for display -->
                   <% let recipientName='' ; let recipientDob='' ; if (request.person_id_1===session.person.person_id) {
                     recipientName=request.person_id_2_first_name; recipientDob=request.person_id_2_date_of_birth; } else
                     { recipientName=request.person_id_1_first_name; recipientDob=request.person_id_1_date_of_birth; }
@@ -174,20 +197,24 @@
                       <div class="card request-card h-100 shadow-sm border-0">
                         <div class="card-body d-flex flex-column gap-3">
                           <div>
+                          <!-- Recipient name heading -->
                             <h5 class="card-title text-primary mb-1">
                               <%= recipientName %>
                             </h5>
+                          <!-- Optional age line if available -->
                             <p class="card-text text-secondary small mb-2">
                               <% if (age) { %>Age: <%= age %>
                                   <% } %>
                             </p>
                             <p class="card-text text-secondary small mb-0">Awaiting response</p>
                           </div>
+                         <!-- Current request status badge -->
                           <div>
                             <span class="badge bg-warning text-dark">
                               <%= request.status %>
                             </span>
                           </div>
+                         <!-- Actions: cancel request and view recipient profile -->
                           <div>
                             <a href="/friendships/cancel/<%= request.person_id_2 %>"
                               class="btn btn-outline-secondary btn-sm fw-semibold w-100">Cancel Request</a>
@@ -202,6 +229,7 @@
                     <% }); %>
               </div>
               <% } else { %>
+                <!-- Empty state when there are no sent requests -->
                 <div class="text-center py-5">
                   <p class="lead text-light">No pending requests sent.</p>
                 </div>

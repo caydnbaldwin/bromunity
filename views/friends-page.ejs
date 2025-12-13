@@ -1,3 +1,7 @@
+<!-- Caydn Baldwin, Brady Bates, Jacob Woodward, Peter Young -->
+<!-- Description: This page is to display all of the friends that the user has. There is an option to 
+ view each of their profiles as well.   -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
   <title>Friends</title>
   <style>
+    /* Theme variables and Bootstrap overrides for friends page */
     :root {
       --color-white: #FFFFFF;
       --color-light-gray: #D9D9D9;
@@ -26,15 +31,18 @@
       --bs-gradient: linear-gradient(135deg, var(--color-dark-blue), var(--color-gray));
     }
 
+    /* Elevation and hover transform for friend cards */
     .friend-card {
       transition: transform 0.2s, box-shadow 0.2s;
     }
 
+    /* Slight lift and shadow on hover */
     .friend-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
     }
 
+    /* Section header with divider line */
     .section-title {
       display: flex;
       align-items: center;
@@ -44,6 +52,7 @@
       border-bottom: 2px solid var(--color-light-gray);
     }
 
+    /* Reset heading spacing within section title */
     .section-title h2 {
       margin: 0;
     }
@@ -58,16 +67,19 @@
         <span class="fs-3 fw-bold">Bromunity</span>
       </a>
       <div class="ms-auto d-flex align-items-center gap-3 flex-wrap justify-content-end">
+        <!-- Admin-only link to manage persons -->
         <% if (session.authentication.role === "admin") { %>
           <a href="/persons/persons" class="btn btn-outline-light fw-semibold px-4">Persons</a>
         <% } %>
         <a href="/profiles/feed" class="btn btn-outline-light fw-semibold px-4">Feed</a>
         <a href="/friendships/pending" class="btn btn-outline-light fw-semibold px-4">
           Requests
+          <!-- Total pending requests (received + sent) -->
           <span class="badge bg-light text-primary ms-2"><%= session.friendships.received.length + session.friendships.sent.length %></span>
         </a>
         <a href="/friendships/accepted" class="btn btn-outline-light fw-semibold px-4">
           Friends
+          <!-- Accepted friendship count -->
           <span class="badge bg-light text-primary ms-2"><%= session.friendships.accepted.accepted %></span>
         </a>
         <a href="/profiles/profile" class="btn btn-light text-primary fw-semibold px-4">Profile</a>
@@ -80,10 +92,12 @@
   <main class="flex-grow-1 py-5" style="background-color: var(--color-black);">
     <div class="container">
       <div class="mb-5 text-center">
+        <!-- Page title and helper subtitle -->
         <h1 class="display-5 fw-bold text-white">Your Friends</h1>
         <p class="text-light mb-0">Connect with your gaming community.</p>
       </div>
 
+      <!-- Error banner when an error message is present -->
       <% if (errorMessage !== null && errorMessage !== "") { %>
         <div class="alert alert-danger" role="alert"><%= errorMessage %></div>
       <% } %>
@@ -92,11 +106,13 @@
       <div class="mb-5">
         <div class="section-title">
           <h2 class="h3 text-white">Friends</h2>
+          <!-- Count of accepted friends in session -->
           <span class="badge bg-primary text-white"><%= session.accepted ? session.accepted.length : 0 %></span>
         </div>
 
         <% if (session.accepted && session.accepted.length > 0) { %>
           <div class="row g-4">
+            <!-- Render each friend card with details and actions -->
             <% session.accepted.forEach(function(friend) { %>
               <% 
                 let friendName = '';
@@ -122,11 +138,15 @@
                 <div class="card friend-card h-100 shadow-sm border-0">
                   <div class="card-body d-flex flex-column gap-3">
                     <div>
+                      <!-- Friend name heading -->
                       <h5 class="card-title text-primary mb-1"><%= friendName %></h5>
+                      <!-- Optional age line if available -->
                       <p class="card-text text-secondary small mb-2"><% if (age) { %>Age: <%= age %><% } %></p>
+                      <!-- Friendship year derived from status date -->
                       <p class="card-text text-secondary small mb-0">Your friend since <%= new Date(friend.status).getFullYear() %></p>
                     </div>
                     <div>
+                      <!-- View the friend's profile -->
                       <a href="/profiles/profile/<%= friendPersonId %>" class="btn btn-primary bg-primary border-0 text-white btn-sm fw-semibold w-100">View Profile</a>
                     </div>
                   </div>
@@ -135,6 +155,7 @@
             <% }); %>
           </div>
         <% } else { %>
+          <!-- Empty state when there are no friends -->
           <div class="text-center py-5">
             <p class="lead text-light mb-4">You don't have any friends yet.</p>
             <a href="/profiles/feed" class="btn btn-primary bg-primary border-0 text-white fw-semibold px-4">Find Friends</a>
