@@ -57,7 +57,7 @@
   </nav>
 
   <!-- Feed Content -->
-  <main class="flex-grow-1 py-5 bg-light">
+  <main class="flex-grow-1 py-5" style="background-color: var(--color-black);">
     <div class="container">
       
 
@@ -67,8 +67,8 @@
 
       <% if (session?.feed?.person && session.feed.person.person_id) { %>
         <div class="mb-4 text-center">
-          <h1 class="display-6 fw-bold text-primary">Your Feed</h1>
-          <p class="text-secondary mb-0">Discover new connections and game profiles.</p>
+          <h1 class="display-6 fw-bold text-white">Your Feed</h1>
+          <p class="text-light mb-0">Discover new connections and game profiles.</p>
         </div>
         <div class="card shadow-sm feed-card mb-4">
           <div class="card-body">
@@ -91,7 +91,7 @@
         </div>
       <% } else { %>
         <div class="text-center py-5">
-          <p class="lead text-secondary mb-4 greentext">No more people to show in your feed.</p>
+          <p class="lead text-light mb-4">No more people to show in your feed.</p>
           <a href="/profiles/profile/<%= session.person.person_id %>" class="btn btn-primary bg-primary border-0 text-white fw-semibold px-4">View Your Profile</a>
         </div>
       <% } %>

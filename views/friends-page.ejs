@@ -77,11 +77,11 @@
   </nav>
 
   <!-- Main Content -->
-  <main class="flex-grow-1 py-5 bg-light">
+  <main class="flex-grow-1 py-5" style="background-color: var(--color-black);">
     <div class="container">
       <div class="mb-5 text-center">
-        <h1 class="display-5 fw-bold text-primary">Your Friends</h1>
-        <p class="text-secondary mb-0">Connect with your gaming community.</p>
+        <h1 class="display-5 fw-bold text-white">Your Friends</h1>
+        <p class="text-light mb-0">Connect with your gaming community.</p>
       </div>
 
       <% if (errorMessage !== null && errorMessage !== "") { %>
@@ -91,7 +91,7 @@
       <!-- Friends List Section -->
       <div class="mb-5">
         <div class="section-title">
-          <h2 class="h3 text-primary">Friends</h2>
+          <h2 class="h3 text-white">Friends</h2>
           <span class="badge bg-primary text-white"><%= session.accepted ? session.accepted.length : 0 %></span>
         </div>
 
@@ -136,7 +136,7 @@
           </div>
         <% } else { %>
           <div class="text-center py-5">
-            <p class="lead text-secondary mb-4">You don't have any friends yet.</p>
+            <p class="lead text-light mb-4">You don't have any friends yet.</p>
             <a href="/profiles/feed" class="btn btn-primary bg-primary border-0 text-white fw-semibold px-4">Find Friends</a>
           </div>
         <% } %>
