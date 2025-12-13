@@ -75,7 +75,11 @@
           Friends
           <span class="badge bg-light text-primary ms-2"><%= session.friendships.accepted.accepted %></span>
         </a>
-        <a href="/profiles/profile/add" class="btn btn-light text-primary fw-semibold px-4">Add Profile</a>
+        <% if (isOwnProfile) { %>
+          <a href="/profiles/profile/add" class="btn btn-light text-primary fw-semibold px-4">Add Profile</a>
+        <% } else { %>
+          <a href="/profiles/profile" class="btn btn-light text-primary fw-semibold px-4">Profile</a>
+        <% } %>
         <a href="/authentication/logout" class="btn btn-light text-primary fw-semibold px-4">Logout</a>
       </div>
     </div>
@@ -85,8 +89,8 @@
   <main class="flex-grow-1 py-5 bg-light">
     <div class="container">
       <div class="mb-4 text-center">
-        <h1 class="display-5 fw-bold text-primary">Your Gaming Profiles</h1>
-        <p class="text-secondary mb-0 greentext">Manage and update your Bromunity presence.</p>
+        <h1 class="display-5 fw-bold text-primary"><%= isOwnProfile ? (viewedPerson ? viewedPerson.first_name + ' ' + viewedPerson.last_name : session.person.first_name + ' ' + (session.person.last_name || '')) : (viewedPerson ? viewedPerson.first_name + ' ' + viewedPerson.last_name : 'Profile') %></h1>
+        <p class="text-secondary mb-0 greentext"><%= isOwnProfile ? 'Manage and update your Bromunity presence.' : 'Viewing user\'s gaming profiles.' %></p>
       </div>
 
       <% if (errorMessage !== null && errorMessage !== "") { %>
@@ -98,11 +102,13 @@
           <% session.profiles.forEach(function(profile) { %>
             <div class="card profile-card h-100 shadow-sm border-0">
               <div class="card-body d-flex flex-column gap-2">
-                <h2 class="h4 text-primary mb-0"><%= session.person.first_name %>'s <%= profile.game_title %> Profile</h2>
-                <div class="d-flex flex-wrap gap-2">
-                  <a href="/profiles/profile/edit/<%= profile.person_id %>/<%= profile.game_id %>" class="btn btn-primary bg-primary border-0 text-white btn-sm fw-semibold">Edit</a>
-                  <a href="/profiles/profile/delete/<%= profile.person_id %>/<%= profile.game_id %>" class="btn btn-outline-secondary btn-sm fw-semibold">Delete</a>
-                </div>
+                <h2 class="h4 text-primary mb-0"><%= (viewedPerson ? viewedPerson.first_name : (isOwnProfile ? session.person.first_name : '')) %>'s <%= profile.game_title %> Profile</h2>
+                <% if (isOwnProfile) { %>
+                  <div class="d-flex flex-wrap gap-2">
+                    <a href="/profiles/profile/edit/<%= profile.person_id %>/<%= profile.game_id %>" class="btn btn-primary bg-primary border-0 text-white btn-sm fw-semibold">Edit</a>
+                    <a href="/profiles/profile/delete/<%= profile.person_id %>/<%= profile.game_id %>" class="btn btn-outline-secondary btn-sm fw-semibold">Delete</a>
+                  </div>
+                <% } %>
                 <div class="mt-2">
                   <% Object.keys(profile).forEach(function(attribute) { %>
                     <% if (attribute !== 'person_id' && attribute !== 'game_id' && attribute !== 'game_title') { %>
@@ -119,8 +125,10 @@
         </div>
       <% } else { %>
         <div class="text-center py-5">
-          <p class="lead text-secondary mb-4">No profiles exist for your account yet.</p>
-          <a href="/profiles/profile/add" class="btn btn-primary bg-primary border-0 text-white fw-semibold px-4">Create Your First Profile</a>
+          <p class="lead text-secondary mb-4"><%= isOwnProfile ? 'No profiles exist for your account yet.' : 'No profiles to display for this user.' %></p>
+          <% if (isOwnProfile) { %>
+            <a href="/profiles/profile/add" class="btn btn-primary bg-primary border-0 text-white fw-semibold px-4">Create Your First Profile</a>
+          <% } %>
         </div>
       <% } %>
     </div>

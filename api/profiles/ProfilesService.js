@@ -13,24 +13,16 @@ class ProfilesService {
     };
   };
 
-  async getProfilePage(session) {
+  async getProfilePage(session, personId) {
     try {
-      const person_id = session.person.person_id;
-      // a god-method to run all relevant queries to get profiles and friendships objects
-      const {profiles, friendships} = await profilesDao.getProfilePage(person_id);
-      console.log('profiles:', profiles);
-      console.log('friendships:', friendships);
-      // verify they exist
-      if (profiles && friendships) {
-        // return them
-        return {profiles: profiles, friendships: friendships};
-      } else {
-        // otherwise throw a generic error
-        throw new Error('Failed get profiles.');
-      };
+      const targetId = personId ?? session.person.person_id;
+      const {profiles} = await profilesDao.getProfilePage(targetId);
+      const viewedPerson = await profilesDao.getPersonById(targetId);
+      const friendships = await profilesDao.getFriendshipCounts(session.person.person_id);
+      return {profiles, friendships, viewedPerson};
     } catch (error) {
       throw error;
-    };
+    }
   };
 
   async getAddProfilePage() {
@@ -74,6 +66,15 @@ class ProfilesService {
     } catch (error) {
       throw error;
     };
+  };
+
+  async getProfileForEdit(person_id, game_id) {
+    try {
+      const profile = await profilesDao.getProfileByIds(person_id, game_id);
+      return profile;
+    } catch (error) {
+      throw error;
+    }
   };
 
   async deleteProfile(urlParameters) {

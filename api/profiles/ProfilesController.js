@@ -19,16 +19,15 @@ class ProfilesController {
 
   async getProfilePage(req, res) {
     try {
-      const {profiles, friendships} = await profilesService.getProfilePage(req.session);
+      const targetPersonId = req.params.person_id ? parseInt(req.params.person_id, 10) : req.session.person.person_id;
+      const {profiles, friendships, viewedPerson} = await profilesService.getProfilePage(req.session, targetPersonId);
       req.session.profiles = profiles;
       req.session.friendships = friendships;
-      if (profiles.length > 0) {
-        res.render('profile-page', {errorMessage: null, session: req.session});
-      } else {
-        res.render('profile-page', {errorMessage: null, session: req.session});
-      };
+      req.session.viewed_person_id = targetPersonId;
+      const isOwnProfile = targetPersonId === req.session.person.person_id;
+      res.render('profile-page', {errorMessage: null, session: req.session, isOwnProfile, viewedPerson});
     } catch (error) {
-      res.render('profile-page', {errorMessage: error, session: req.session});
+      res.render('profile-page', {errorMessage: error, session: req.session, isOwnProfile: true, viewedPerson: null});
     };
   };
 
@@ -57,11 +56,13 @@ class ProfilesController {
     try {
       const games = await profilesService.getAddProfilePage();
       const friendships = await friendshipsService.getPendingPage(req.session);
+      const { person_id, game_id } = req.params;
+      const profile = await profilesService.getProfileForEdit(parseInt(person_id, 10), parseInt(game_id, 10));
       req.session.games = games;
       req.session.friendships = friendships;
-      res.render('edit-profile-page', {errorMessage: null, session: req.session, params: req.params});
+      res.render('edit-profile-page', {errorMessage: null, session: req.session, params: req.params, profile});
     } catch (error) {
-      res.render('edit-profile-page', {errorMessage: error, session: req.session, params: req.params});
+      res.render('edit-profile-page', {errorMessage: error, session: req.session, params: req.params, profile: null});
     };
   };
 
