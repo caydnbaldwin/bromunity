@@ -62,7 +62,7 @@
   <!-- Navigation -->
   <nav class="navbar bg-primary navbar-dark shadow py-4">
     <div class="container d-flex align-items-center">
-      <a href="/" class="navbar-brand d-flex align-items-center gap-2 text-decoration-none text-white">
+      <a href="/profiles/profile" class="navbar-brand d-flex align-items-center gap-2 text-decoration-none text-white">
         <img src="/logo.png" alt="Bromunity Logo" height="35">
         <span class="fs-3 fw-bold">Bromunity</span>
       </a>
@@ -142,8 +142,8 @@
                       <h5 class="card-title text-primary mb-1"><%= friendName %></h5>
                       <!-- Optional age line if available -->
                       <p class="card-text text-secondary small mb-2"><% if (age) { %>Age: <%= age %><% } %></p>
-                      <!-- Friendship year derived from status date -->
-                      <p class="card-text text-secondary small mb-0">Your friend since <%= new Date(friend.status).getFullYear() %></p>
+                      <!-- Friendship year derived from status date. Commented out but we can implement it later -->
+                      <!-- <p class="card-text text-secondary small mb-0">Your friend since <%= // new Date(friend.status).getFullYear() %></p> -->
                     </div>
                     <div>
                       <!-- View the friend's profile -->
